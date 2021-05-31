@@ -1,3 +1,5 @@
+import { IVerse } from "../types";
+
 const ALL_CHAR_REGEX = /[^a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]/g;
 
 export const parseAnswer = (answer: string): string =>
@@ -44,4 +46,12 @@ export const shuffleArray = (array) => {
     resArray[j] = x;
   }
   return resArray;
+};
+
+export const HEBREWS_9_27: IVerse = {
+  book: "히브리서",
+  chapter: "9",
+  verse: "27",
+  contents:
+    "한 번 죽는 것은 사람에게 정해진 것이요 그 후에는 심판이 있으리니"
 };
