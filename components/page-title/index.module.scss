@@ -9,4 +9,10 @@ a.home-link {
   position: absolute;
   top: 0;
   left: 30px;
+
+  h3 {
+    @media (max-width: 600px) {
+      font-size: 1rem;
+    }
+  }
 }

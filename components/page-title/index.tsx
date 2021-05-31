@@ -12,7 +12,7 @@ export default function PageTitle({ label }: PageTitleProps) {
     <div>
       <Link href={"/"}>
         <a className={cx("home-link")}>
-          <h3>💒 사랑의 교회 제자훈련 ️❤️</h3>
+          <h3>💒 사랑의 교회 제자훈련❤️</h3>
         </a>
       </Link>
       <h1 className={cx("title")}>{label}</h1>

@@ -7,7 +7,7 @@ export default function Home() {
     <div className={styles.container}>
       <HeadComp />
       <main className={styles.main}>
-        <h1 className={styles.title}>💒 사랑의 교회 제자훈련 ️❤️</h1>
+        <h1 className={styles.title}>💒 사랑의 교회 제자훈련️❤️</h1>
         <p className={styles.description}>암송시험 준비 홈페이지</p>
         <div className={styles.grid}>
           <Link href={{ pathname: "/all-verses" }}>
