@@ -4,8 +4,7 @@ import { Button, Textarea } from "@geist-ui/react";
 import cn from "classnames/bind";
 import { IVerse } from "../../types";
 import styles from "./index.module.scss";
-import { checkAnswer, gitAnswerDiff, parseAnswer } from "../../utils";
-import { useMediaQuery } from "react-responsive";
+import { checkAnswer, gitAnswerDiff } from "../../utils";
 const cx = cn.bind(styles);
 
 enum QuizStatus {
@@ -71,17 +70,24 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
     }
   };
 
+  const checkKeyDown = (e) => {
+    const keyCode = e.keyCode ? e.keyCode : e.which;
+    if (keyCode === 13 && e.ctrlKey) {
+      handleSubmit(onSubmit)();
+    }
+  };
+
   return (
     <div className={cx(["wrapper"])}>
       <p className={cx(["title"])}>{`${book} ${chapter}장 ${verse}절`}</p>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} onKeyDown={checkKeyDown}>
         <Textarea
           {...register("submissionAnswer")}
-          width={"718px"}
+          width={"100%"}
           minHeight={"200px"}
           className={cx("answer-textarea")}
         />
-        <Button type={"secondary"} htmlType={"submit"}>
+        <Button type={"success-light"} htmlType={"submit"}>
           {quizStatus !== QuizStatus.NOT_SUBMITTED && "다시"} 제출 하기
         </Button>
       </form>

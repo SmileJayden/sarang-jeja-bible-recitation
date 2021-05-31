@@ -48,7 +48,7 @@ function TestRandom() {
             <QuizVerse {...ALL_VERSES[targetVerseIdx]} />
             <Button
               className={cx("next-button")}
-              type={"success-light"}
+              type={"secondary"}
               onClick={() => handleNextQuiz()}
             >
               다음 문제 풀기

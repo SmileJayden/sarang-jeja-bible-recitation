@@ -3,10 +3,18 @@
   border: 1px solid black;
   padding: 0 40px 40px;
   margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 
   .title {
     font-size: 24px;
     color: #211e75;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
   }
 
   .answer-textarea {
@@ -33,6 +41,10 @@
       padding: 0.3rem;
       border-radius: 0.5rem;
     }
+  }
+
+  button {
+    margin-left: auto;
   }
 
   .show-answer-btn {
