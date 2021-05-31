@@ -1,0 +1,45 @@
+.wrapper {
+  border-radius: 20px;
+  border: 1px solid black;
+  padding: 0 40px 40px;
+  margin-bottom: 40px;
+
+  .title {
+    font-size: 24px;
+    color: #211e75;
+  }
+
+  .answer-textarea {
+    margin-bottom: 20px;
+  }
+
+  div.quiz-status {
+    margin-top: 1rem;
+    padding: 1px 1rem;
+    border-radius: 8px;
+
+    &.is-correct {
+      background-color: #e6ebf5;
+    }
+    &.is-wrong {
+      background-color: #f7e1e1;
+    }
+    p {
+      line-height: 1.75rem;
+    }
+    p > span {
+      color: white;
+      background-color: red;
+      padding: 0.3rem;
+      border-radius: 0.5rem;
+    }
+  }
+
+  .show-answer-btn {
+    margin-top: 1rem;
+  }
+
+  p.answer {
+    white-space: pre-line;
+  }
+}

@@ -1,0 +1,12 @@
+h1.title {
+  font-size: 48px;
+  text-align: center;
+  @media (max-width: 600px) {
+    font-size: 32px;
+  }
+}
+a.home-link {
+  position: absolute;
+  top: 0;
+  left: 30px;
+}

@@ -1,0 +1,17 @@
+div.verse-wrapper {
+  max-width: 800px;
+  border: 2px solid #7876cf;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+
+  p:first-child {
+    font-size: 24px;
+    color: #211e75;
+  }
+  p:last-child {
+    font-size: 16px;
+    color: #262547;
+    white-space: pre-line;
+  }
+}
