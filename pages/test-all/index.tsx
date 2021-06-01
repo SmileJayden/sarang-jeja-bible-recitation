@@ -44,9 +44,9 @@ function AllVerses() {
               <p>데스크탑으로 이용해 주세요 👨‍💻</p>
             </div>
           ) : (
-            verses.map((verse, i) => {
-              return <QuizVerse key={`verse-quiz-${i}`} {...verse} />;
-            })
+            verses.map((verse, i) => (
+              <QuizVerse key={`verse-quiz-${i}`} {...verse} />
+            ))
           )}
         </div>
       </main>

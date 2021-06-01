@@ -39,7 +39,7 @@ export const getAnswerDiff = (submission: string, answer: string): string => {
   return splitAnswer.join(" ");
 };
 
-export const getShuffledArray = (array: unknown[]) => {
+export const getShuffledArray = <T>(array: T[]): T[] => {
   const resArray = [...array];
   for (let i = 0; i < array.length; i++) {
     const j = Math.floor(Math.random() * (i + 1));
