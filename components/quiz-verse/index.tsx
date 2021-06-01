@@ -4,7 +4,7 @@ import { Button, Textarea } from "@geist-ui/react";
 import cn from "classnames/bind";
 import { IVerse } from "../../types";
 import styles from "./index.module.scss";
-import { checkAnswer, gitAnswerDiff } from "../../utils";
+import { checkIsAnswerCorrect, getAnswerDiff } from "../../utils";
 const cx = cn.bind(styles);
 
 enum QuizStatus {
@@ -17,7 +17,8 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
   const { register, handleSubmit, reset } = useForm();
 
   const [answer, setAnswer] = useState<string>("");
-  const [answerOpened, setAnswerOpened] = useState(false);
+  const [answerOpened, setAnswerOpened] = useState<boolean>(false);
+  const [statusHighlighted, setStatusHighlighted] = useState<boolean>(false);
   const [quizStatus, setQuizStatus] = useState<QuizStatus>(
     QuizStatus.NOT_SUBMITTED
   );
@@ -30,8 +31,12 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
 
   const onSubmit = (data) => {
     setAnswer(data.submissionAnswer);
+    setStatusHighlighted(true);
+    setTimeout(() => {
+      setStatusHighlighted(false);
+    }, 100);
     setQuizStatus(
-      checkAnswer(data.submissionAnswer, contents)
+      checkIsAnswerCorrect(data.submissionAnswer, contents)
         ? QuizStatus.CORRECT
         : QuizStatus.WRONG
     );
@@ -42,8 +47,11 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
       case QuizStatus.CORRECT:
         return (
           <div
-            className={cx(["quiz-status"])}
-            style={{ backgroundColor: "#e6ebf5" }}
+            className={cx([
+              "quiz-status",
+              "correct",
+              { highlighted: statusHighlighted },
+            ])}
           >
             <p>🙆‍♂️ 정답입니다! 😃 👍 👍 👍 👍 👍</p>
           </div>
@@ -51,20 +59,22 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
       case QuizStatus.WRONG:
         return (
           <div
-            className={cx(["quiz-status"])}
-            style={{ backgroundColor: "#fff8f7" }}
+            className={cx([
+              "quiz-status",
+              "incorrect",
+              { highlighted: statusHighlighted },
+            ])}
           >
-            <p>🙅‍♀️ 오답입니다! 🥲</p>
+            <p>{statusHighlighted}🙅‍♀️ 오답입니다! 🥲</p>
             <p>📕 오답노트 ⬇️</p>
             <p
               dangerouslySetInnerHTML={{
-                __html: gitAnswerDiff(answer, contents),
+                __html: getAnswerDiff(answer, contents),
               }}
             />
           </div>
         );
       case QuizStatus.NOT_SUBMITTED:
-        return <></>;
       default:
         return <></>;
     }
@@ -88,7 +98,7 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
           className={cx("answer-textarea")}
         />
         <Button type={"success-light"} htmlType={"submit"}>
-          {quizStatus !== QuizStatus.NOT_SUBMITTED && "다시"} 제출 하기
+          제출 하기 (Ctrl + Enter)
         </Button>
       </form>
       {renderStatusComp(quizStatus)}

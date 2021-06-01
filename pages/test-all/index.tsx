@@ -5,7 +5,7 @@ import QuizVerse from "../../components/quiz-verse";
 import PageTitle from "../../components/page-title";
 import styles from "./index.module.scss";
 import { ALL_VERSES } from "../../constants/verses";
-import { shuffleArray } from "../../utils";
+import { getShuffledArray } from "../../utils";
 import { useMediaQuery } from "react-responsive";
 
 const cx = cn.bind(styles);
@@ -25,7 +25,7 @@ function AllVerses() {
 
   const verses =
     typeof count === "string"
-      ? shuffleArray(ALL_VERSES).slice(0, parseInt(count))
+      ? getShuffledArray(ALL_VERSES).slice(0, parseInt(count))
       : ALL_VERSES;
 
   const isMobile = useMediaQuery({

@@ -19,6 +19,10 @@
 
   .answer-textarea {
     margin-bottom: 20px;
+    textarea {
+      font-size: 1rem;
+      line-height: 1.6rem;
+    }
   }
 
   div.quiz-status {
@@ -26,12 +30,22 @@
     padding: 1px 1rem;
     border-radius: 8px;
 
-    &.is-correct {
-      background-color: #e6ebf5;
+    &.correct {
+      background-color: #ebf3ff;
     }
-    &.is-wrong {
-      background-color: #f7e1e1;
+    &.incorrect {
+      background-color: #fff8f7;
     }
+
+    &.highlighted {
+      &.correct {
+        background-color: #dce9fc;
+      }
+      &.incorrect {
+        background-color: #fff0ed;
+      }
+    }
+
     p {
       line-height: 1.75rem;
     }
@@ -53,5 +67,16 @@
 
   p.answer {
     white-space: pre-line;
+  }
+}
+
+@keyframes ripple-background {
+  from {
+    transform: scale(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
   }
 }
