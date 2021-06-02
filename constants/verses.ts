@@ -366,7 +366,7 @@ export const REVELATION_3_20: IVerse = {
   chapter: "3",
   verse: "20",
   contents:
-    "볼지어다 내가 문 밖에 서서 두드리노니 누구든지 내 음성을 듣고 문을 열면 내가 그에게로 들어가 그와 더블어 먹고 그는 나와 더불어 먹으리라",
+    "볼지어다 내가 문 밖에 서서 두드리노니 누구든지 내 음성을 듣고 문을 열면 내가 그에게로 들어가 그와 더불어 먹고 그는 나와 더불어 먹으리라",
 };
 
 export const REVELATION_22_7: IVerse = {

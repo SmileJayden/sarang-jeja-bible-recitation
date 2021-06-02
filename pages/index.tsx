@@ -19,7 +19,7 @@ export default function Home() {
           <Link href={{ pathname: "/test-random-each" }}>
             <a className={styles.card}>
               <h2>한 말씀 씩 시험 &rarr;</h2>
-              <p>한 말씀 씩 외워보기</p>
+              <p>한 말씀 씩 무작위로 외워보기</p>
             </a>
           </Link>
           <Link href={{ pathname: "/test-all" }}>
@@ -31,7 +31,7 @@ export default function Home() {
           <Link href={{ pathname: "/test-all", query: { count: 20 } }}>
             <a className={styles.card}>
               <h2>모의 시험 &rarr;</h2>
-              <p>전체 말씀 중 랜덤하게 20개 풀어보기</p>
+              <p>전체 말씀 중 무작위로 20개 풀어보기</p>
             </a>
           </Link>
         </div>
