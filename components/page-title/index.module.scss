@@ -2,7 +2,11 @@ h1.title {
   font-size: 48px;
   text-align: center;
   @media (max-width: 600px) {
+    white-space: pre;
     font-size: 32px;
+  }
+  @media (max-width: 400px) {
+    font-size: 24px;
   }
 }
 a.home-link {

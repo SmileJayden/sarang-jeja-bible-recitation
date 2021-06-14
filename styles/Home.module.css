@@ -71,14 +71,14 @@
 .grid {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex-wrap: wrap;
   max-width: 800px;
-  margin-top: 3rem;
+  margin-top: 1.25rem;
 }
 
 .card {
-  margin: 1rem;
+  margin: 1.25rem;
   padding: 1.5rem;
   text-align: left;
   color: inherit;
@@ -120,9 +120,24 @@
   .card {
     width: 80%;
   }
+  .grid {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 600px) {
+  .grid {
+    margin-top: 12px;
+  }
+  .card {
+    margin: 8px;
+  }
+  .card h2 {
+    font-size: 1.2rem;
+  }
+  .card p {
+    font-size: 1rem;
+  }
   .title {
     font-size: 1.5rem;
   }

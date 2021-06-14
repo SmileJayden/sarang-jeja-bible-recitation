@@ -34,12 +34,8 @@ function TestRandom() {
     setShuffleTrigger((prev) => !prev);
   };
 
-  const isMobile = useMediaQuery({
-    query: "(max-width :830px)",
-  });
-
   const getPageTitle = useMemo<string>(() => {
-    let title = "☝️ 한 문제씩 무작위로 풀어보기";
+    let title = "☝️ 한 문제씩 무작위로\n 풀어보기";
     if (targetVerseIdx < shuffledVerses.length)
       title += ` (${targetVerseIdx + 1}/${shuffledVerses.length})`;
     return title;
@@ -50,12 +46,7 @@ function TestRandom() {
       <HeadComp />
       <main className={cx("main")}>
         <PageTitle label={getPageTitle} />
-        {isMobile ? (
-          <div className={cx("mobile-view")}>
-            <p>아직 모바일화면은 제공하지 않습니다 🙏</p>
-            <p>데스크탑으로 이용해 주세요 👨‍💻</p>
-          </div>
-        ) : targetVerseIdx >= shuffledVerses.length ? (
+        {targetVerseIdx >= shuffledVerses.length ? (
           <>
             <div>모든 문제를 다 풀었습니다! 😀 👍</div>
             <Button
@@ -76,14 +67,14 @@ function TestRandom() {
                 onClick={() => handlePrevQuiz()}
                 disabled={targetVerseIdx <= 0}
               >
-                이전 문제 풀기
+                <span style={{ marginRight: "8px" }}>⬅️</span>이전 문제 풀기
               </Button>
               <Button
                 className={cx("next-button")}
                 type={"secondary"}
                 onClick={() => handleNextQuiz()}
               >
-                다음 문제 풀기
+                다음 문제 풀기 ➡️
               </Button>
             </div>
           </>

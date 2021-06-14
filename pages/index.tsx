@@ -12,31 +12,36 @@ export default function Home() {
         <div className={styles.grid}>
           <Link href={{ pathname: "/all-verses" }}>
             <a className={styles.card}>
-              <h2>전체 말씀 &rarr;</h2>
+              <h2>📖 전체 말씀 &rarr;</h2>
               <p>전체 말씀 보기</p>
+            </a>
+          </Link>
+          <Link href={{ pathname: "/by-week" }}>
+            <a className={styles.card}>
+              <h2>🌈 주차 별로 보기 &rarr;</h2>
+              <p>제자 훈련 주차 별로 보기</p>
             </a>
           </Link>
           <Link href={{ pathname: "/test-random-each" }}>
             <a className={styles.card}>
-              <h2>한 말씀 씩 시험 &rarr;</h2>
+              <h2>☝️ 한 말씀 씩 시험 &rarr;</h2>
               <p>한 말씀 씩 무작위로 외워보기</p>
             </a>
           </Link>
           <Link href={{ pathname: "/test-all" }}>
             <a className={styles.card}>
-              <h2>전체 말씀 시험&rarr;</h2>
-              <p>전체 말씀 외워보기 &rarr;</p>
+              <h2>📝 전체 말씀 시험&rarr;</h2>
+              <p>전체 말씀 외워보기</p>
             </a>
           </Link>
           <Link href={{ pathname: "/test-all", query: { count: 20 } }}>
             <a className={styles.card}>
-              <h2>모의 시험 &rarr;</h2>
+              <h2>📝 모의 시험 &rarr;</h2>
               <p>전체 말씀 중 무작위로 20개 풀어보기</p>
             </a>
           </Link>
         </div>
       </main>
-
       <footer className={styles.footer}>
         <a
           href="mailto:wkdwodud07@gmail.com"
