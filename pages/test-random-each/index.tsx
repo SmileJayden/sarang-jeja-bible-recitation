@@ -42,45 +42,42 @@ function TestRandom() {
   }, [targetVerseIdx]);
 
   return (
-    <>
-      <HeadComp />
-      <main className={cx("main")}>
-        <PageTitle label={getPageTitle} />
-        {targetVerseIdx >= shuffledVerses.length ? (
-          <>
-            <div>모든 문제를 다 풀었습니다! 😀 👍</div>
+    <main className={cx("main")}>
+      <PageTitle label={getPageTitle} />
+      {targetVerseIdx >= shuffledVerses.length ? (
+        <>
+          <div>모든 문제를 다 풀었습니다! 😀 👍</div>
+          <Button
+            className={cx("reset-button")}
+            type={"secondary"}
+            onClick={() => handleReset()}
+          >
+            다시 시작하기
+          </Button>
+        </>
+      ) : (
+        <>
+          <QuizVerse {...shuffledVerses[targetVerseIdx]} />
+          <div className={cx("button-wrapper")}>
             <Button
-              className={cx("reset-button")}
+              className={cx("prev-button")}
               type={"secondary"}
-              onClick={() => handleReset()}
+              onClick={() => handlePrevQuiz()}
+              disabled={targetVerseIdx <= 0}
             >
-              다시 시작하기
+              <span style={{ marginRight: "8px" }}>⬅️</span>이전 문제 풀기
             </Button>
-          </>
-        ) : (
-          <>
-            <QuizVerse {...shuffledVerses[targetVerseIdx]} />
-            <div className={cx("button-wrapper")}>
-              <Button
-                className={cx("prev-button")}
-                type={"secondary"}
-                onClick={() => handlePrevQuiz()}
-                disabled={targetVerseIdx <= 0}
-              >
-                <span style={{ marginRight: "8px" }}>⬅️</span>이전 문제 풀기
-              </Button>
-              <Button
-                className={cx("next-button")}
-                type={"secondary"}
-                onClick={() => handleNextQuiz()}
-              >
-                다음 문제 풀기 ➡️
-              </Button>
-            </div>
-          </>
-        )}
-      </main>
-    </>
+            <Button
+              className={cx("next-button")}
+              type={"secondary"}
+              onClick={() => handleNextQuiz()}
+            >
+              다음 문제 풀기 ➡️
+            </Button>
+          </div>
+        </>
+      )}
+    </main>
   );
 }
 

@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import cn from "classnames/bind";
-import HeadComp from "../../components/head";
 import QuizVerse from "../../components/quiz-verse";
 import PageTitle from "../../components/page-title";
 import styles from "./index.module.scss";
@@ -28,17 +27,14 @@ function AllVerses() {
       : ALL_VERSES;
 
   return (
-    <>
-      <HeadComp />
-      <main className={cx("main")}>
-        <div className={cx("container")}>
-          <PageTitle label={getTitle(count)} />
-          {verses.map((verse, i) => (
-            <QuizVerse key={`verse-quiz-${i}`} {...verse} />
-          ))}
-        </div>
-      </main>
-    </>
+    <main className={cx("main")}>
+      <div className={cx("container")}>
+        <PageTitle label={getTitle(count)} />
+        {verses.map((verse, i) => (
+          <QuizVerse key={`verse-quiz-${i}`} {...verse} />
+        ))}
+      </div>
+    </main>
   );
 }
 
