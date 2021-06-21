@@ -10,12 +10,12 @@
   "dependencies": {
     "@geist-ui/react": "^2.1.5",
     "@geist-ui/react-icons": "^1.0.1",
-    "classnames": "^2.3.1",
     "firebase": "^8.6.8",
-    "next": "10.2.3",
+    "next": "^11.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-hook-form": "^7.7.1",
+    "react-hook-form": "^7.9.0",
+    "react-query": "^3.17.2",
     "react-responsive": "^8.2.0",
     "sass": "^1.34.0"
   },

@@ -13,6 +13,7 @@ import {
   useToasts,
 } from "@geist-ui/react";
 import { Info } from "@geist-ui/react-icons";
+import { PageSubTitle } from "../../constants/titles";
 
 type BoardPostFormData = {
   title: string;
@@ -68,12 +69,12 @@ export default function BoardPostModal() {
         hihi
       </button>
       <Button auto onClick={() => setVisible(true)}>
-        Show Modal
+        방명록 쓰기
       </Button>
       <form id={"post-board-form"} onSubmit={onSubmit} autoComplete={"off"}>
         <Modal {...bindings} width={"60rem"}>
           <Modal.Title>방명록 쓰기</Modal.Title>
-          <Modal.Subtitle>방명록 한번 써 보실라우?</Modal.Subtitle>
+          <Modal.Subtitle>{PageSubTitle.GUEST_BOARD}</Modal.Subtitle>
           <Modal.Content>
             <Input
               {...register("author", { required: true })}

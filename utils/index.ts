@@ -1,6 +1,4 @@
-import { IVerse } from "../types";
-
-const ALL_SPECIAL_CHAR_REGEX = /[^a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]/g;
+const ALL_SPECIAL_CHAR_REGEX = /[^a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣ㅣ,]/g;
 
 export const parseAnswer = (answer: string): string =>
   answer.replace(ALL_SPECIAL_CHAR_REGEX, "");
@@ -34,7 +32,9 @@ export const getAnswerDiff = (submission: string, answer: string): string => {
     diffIndex = i;
   });
 
-  splitAnswer[diffIndex] = `<span >${splitAnswer[diffIndex]}</span>`;
+  splitAnswer[
+    diffIndex
+  ] = `<span class="wrong-word">${splitAnswer[diffIndex]}</span>`;
 
   return splitAnswer.join(" ");
 };

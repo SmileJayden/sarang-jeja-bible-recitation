@@ -1,20 +1,18 @@
+import { Fragment } from "react";
+import { Page, Spacer } from "@geist-ui/react";
 import { ALL_VERSES } from "../../constants/verses";
 import Verse from "../../components/verse";
-import cn from "classnames/bind";
-import styles from "./index.module.scss";
-import PageTitle from "../../components/page-title";
-const cx = cn.bind(styles);
 
 function AllVerses() {
   return (
-    <main className={cx("main")}>
-      <div className={cx("container")}>
-        <PageTitle label={"📖 전체 암송구절"} />
-        {ALL_VERSES.map((verse, i) => {
-          return <Verse key={i} {...verse} />;
-        })}
-      </div>
-    </main>
+    <Page.Content className={"contents-main"}>
+      {ALL_VERSES.map((verse, i) => (
+        <Fragment key={i}>
+          <Verse {...verse} />
+          <Spacer y={1.5} />
+        </Fragment>
+      ))}
+    </Page.Content>
   );
 }
 

@@ -1,17 +1,18 @@
 import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
-import { Button } from "@geist-ui/react";
-import cn from "classnames/bind";
+import { Button, Spacer, Page, Row, Text } from "@geist-ui/react";
 import { ALL_VERSES } from "../../constants/verses";
-import HeadComp from "../../components/head";
 const QuizVerse = dynamic(() => import("../../components/quiz-verse"), {
   ssr: false,
 });
-import PageTitle from "../../components/page-title";
-import styles from "./index.module.scss";
-import { useMediaQuery } from "react-responsive";
+const NextPrevButtons = dynamic(
+  () => import("../../components/next-prev-buttons"),
+  {
+    ssr: false,
+  }
+);
 import { getShuffledArray } from "../../utils";
-const cx = cn.bind(styles);
+import { useMediaQuery } from "react-responsive";
 
 function TestRandom() {
   const [targetVerseIdx, setTargetVerseIdx] = useState(0);
@@ -34,50 +35,32 @@ function TestRandom() {
     setShuffleTrigger((prev) => !prev);
   };
 
-  const getPageTitle = useMemo<string>(() => {
-    let title = "☝️ 한 문제씩 무작위로\n 풀어보기";
-    if (targetVerseIdx < shuffledVerses.length)
-      title += ` (${targetVerseIdx + 1}/${shuffledVerses.length})`;
-    return title;
-  }, [targetVerseIdx]);
-
   return (
-    <main className={cx("main")}>
-      <PageTitle label={getPageTitle} />
+    <Page.Content className={"contents-main"}>
       {targetVerseIdx >= shuffledVerses.length ? (
-        <>
-          <div>모든 문제를 다 풀었습니다! 😀 👍</div>
-          <Button
-            className={cx("reset-button")}
-            type={"secondary"}
-            onClick={() => handleReset()}
-          >
+        <Row style={{ flexDirection: "column" }} align={"middle"}>
+          <Text>모든 문제를 다 풀었습니다! 😀 👍</Text>
+          <Button type={"secondary"} onClick={() => handleReset()}>
             다시 시작하기
           </Button>
-        </>
+        </Row>
       ) : (
         <>
+          <Text
+            style={{ textAlign: "right", marginTop: 0, position: "relative" }}
+          >
+            {targetVerseIdx + 1} 번째 말씀 / 총 {ALL_VERSES.length} 말씀
+          </Text>
           <QuizVerse {...shuffledVerses[targetVerseIdx]} />
-          <div className={cx("button-wrapper")}>
-            <Button
-              className={cx("prev-button")}
-              type={"secondary"}
-              onClick={() => handlePrevQuiz()}
-              disabled={targetVerseIdx <= 0}
-            >
-              <span style={{ marginRight: "8px" }}>⬅️</span>이전 문제 풀기
-            </Button>
-            <Button
-              className={cx("next-button")}
-              type={"secondary"}
-              onClick={() => handleNextQuiz()}
-            >
-              다음 문제 풀기 ➡️
-            </Button>
-          </div>
+          <Spacer y={1.25} />
+          <NextPrevButtons
+            onPrevClick={handlePrevQuiz}
+            onNextClick={handleNextQuiz}
+            prevDisabled={targetVerseIdx <= 0}
+          />
         </>
       )}
-    </main>
+    </Page.Content>
   );
 }
 

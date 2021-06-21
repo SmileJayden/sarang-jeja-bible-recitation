@@ -1,20 +1,12 @@
+import { Fragment, useMemo } from "react";
+import { Page, Spacer, Text } from "@geist-ui/react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import cn from "classnames/bind";
-import QuizVerse from "../../components/quiz-verse";
-import PageTitle from "../../components/page-title";
-import styles from "./index.module.scss";
+const QuizVerse = dynamic(() => import("../../components/quiz-verse"), {
+  ssr: false,
+});
 import { ALL_VERSES } from "../../constants/verses";
 import { getShuffledArray } from "../../utils";
-
-const cx = cn.bind(styles);
-
-const getTitle = (count: string | string[] | undefined): string => {
-  let label = "암송 시험";
-  if (count) label += ` (${count} 문제)`;
-  else label = "전체 " + label;
-
-  return "📝 " + label;
-};
 
 function AllVerses() {
   const {
@@ -26,15 +18,23 @@ function AllVerses() {
       ? getShuffledArray(ALL_VERSES).slice(0, parseInt(count))
       : ALL_VERSES;
 
+  const caption = useMemo(() => {
+    if (count) return `무작위로 선별된 ${count}개 말씀 구절`;
+    return "전체 암송 말씀 구절";
+  }, [count]);
+
   return (
-    <main className={cx("main")}>
-      <div className={cx("container")}>
-        <PageTitle label={getTitle(count)} />
-        {verses.map((verse, i) => (
-          <QuizVerse key={`verse-quiz-${i}`} {...verse} />
-        ))}
-      </div>
-    </main>
+    <Page.Content className={"contents-main"}>
+      <Text h3 style={{ textAlign: "center" }}>
+        {caption}
+      </Text>
+      {verses.map((verse, i) => (
+        <Fragment key={`verse-quiz-${i}`}>
+          <QuizVerse {...verse} />
+          <Spacer y={2} />
+        </Fragment>
+      ))}
+    </Page.Content>
   );
 }
 
