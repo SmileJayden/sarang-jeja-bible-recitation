@@ -39,7 +39,7 @@ function TestRandom() {
     <Page.Content className={"contents-main"}>
       {targetVerseIdx >= shuffledVerses.length ? (
         <Row style={{ flexDirection: "column" }} align={"middle"}>
-          <Text>모든 문제를 다 풀었습니다! 😀 👍</Text>
+          <Text>모든 말씀을 다 암송했습니다! 😀 👍</Text>
           <Button type={"secondary"} onClick={() => handleReset()}>
             다시 시작하기
           </Button>

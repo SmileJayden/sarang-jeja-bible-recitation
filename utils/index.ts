@@ -49,3 +49,11 @@ export const getShuffledArray = <T>(array: T[]): T[] => {
   }
   return resArray;
 };
+
+export const formatUnixTimestampToString = (dateTime: number): string => {
+  return (
+    new Date(dateTime * 1000).toISOString().slice(0, 10) +
+    " at " +
+    new Date(dateTime * 1000).toLocaleTimeString()
+  );
+};

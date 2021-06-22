@@ -1,142 +1,117 @@
 import { useCallback } from "react";
-import { useForm } from "react-hook-form";
-import {
-  Button,
-  Input,
-  Modal,
-  Row,
-  Spacer,
-  Text,
-  Textarea,
-  Tooltip,
-  useModal,
-  useToasts,
-} from "@geist-ui/react";
-import { Info } from "@geist-ui/react-icons";
-import { PageSubTitle } from "../../constants/titles";
+import { useMutation } from "react-query";
+import { Col, Divider, Grid, Modal, Row, Spacer, Text } from "@geist-ui/react";
+import { HttpMethod, mutationKeys } from "../../constants/http";
+import { PostResponse } from "../../types";
+import { formatUnixTimestampToString } from "../../utils";
+import { Emotion } from "../../constants/emotion";
+import EachEmotion from "./each-emotion";
+import PostDeleteButton from "./delete-button";
+import { debounce } from "../../hooks";
 
-type BoardPostFormData = {
-  title: string;
-  author: string;
-  contents: string;
-  password: string;
+type PostEmotionBody = {
+  postId: string;
+  emotion: Emotion;
+  incCount: number;
 };
 
-export default function BoardPostModal() {
-  const { visible, setVisible, bindings } = useModal();
-  const [, setToast] = useToasts();
-  const defaultValues: BoardPostFormData = {
-    author:
-      (typeof window !== "undefined" &&
-        window?.localStorage?.getItem("author")) ||
-      "",
-    title: "",
-    contents: "",
-    password: "",
-  };
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<BoardPostFormData>({
-    defaultValues: { ...defaultValues },
-  });
+type Props = {
+  post: PostResponse | null;
+  visible: boolean;
+  onClose: () => void;
+};
 
-  const onSubmit = useCallback(
-    handleSubmit(({ author, contents, title, password }) => {
-      window.localStorage.setItem("author", author);
-      reset({ ...defaultValues, author });
-      setVisible(false);
-      setToast({
-        text: "방명록 생성에 성공하였습니다!",
-        type: "success",
-      });
-    }),
-    [reset, setToast]
+export default function BoardPostModal({ post, visible, onClose }: Props) {
+  const { mutate: emitEmotionMutation } = useMutation<{}, {}, PostEmotionBody>(
+    mutationKeys.EDIT_EMOTION,
+    ({ postId, emotion, incCount }) =>
+      fetch("/api/emotion", {
+        method: HttpMethod.PUT,
+        body: JSON.stringify({ postId, emotion, incCount }),
+      }).then((res) => res.json())
   );
 
+  const handleClickEmotionFactory = useCallback(
+    (postId, emotion) => {
+      let incCount = 0;
+      const postMutation = debounce(() => {
+        emitEmotionMutation({ postId, emotion, incCount });
+        incCount = 0;
+      }, 400);
+      return () => {
+        incCount++;
+        postMutation();
+      };
+    },
+    [post]
+  );
+
+  const handleSuccessDeletePost = () => {
+    onClose();
+  };
+
+  if (!post) return <div />;
+
   return (
-    <>
-      <button
-        onClick={() =>
-          setToast({
-            text: "방명록 생성에 성공하였습니다!",
-            type: "success",
-          })
-        }
-      >
-        hihi
-      </button>
-      <Button auto onClick={() => setVisible(true)}>
-        방명록 쓰기
-      </Button>
-      <form id={"post-board-form"} onSubmit={onSubmit} autoComplete={"off"}>
-        <Modal {...bindings} width={"60rem"}>
-          <Modal.Title>방명록 쓰기</Modal.Title>
-          <Modal.Subtitle>{PageSubTitle.GUEST_BOARD}</Modal.Subtitle>
-          <Modal.Content>
-            <Input
-              {...register("author", { required: true })}
-              width={"240px"}
-              placeholder="이름이나 별명을 입력해 주세요"
-              status={errors.author ? "error" : "default"}
-            >
-              글 쓴이
-            </Input>
-            <Spacer y={0.5} />
-            <Input
-              {...register("title", { required: true })}
-              width={"240px"}
-              placeholder="방명록 제목을 입력해주세요"
-              status={errors.title ? "error" : "default"}
-            >
-              제목
-            </Input>
-            <Text
-              p
-              style={{ color: "#444", marginBottom: "8pt", lineHeight: "1.5" }}
-            >
-              내용
-            </Text>
-            <Textarea
-              {...register("contents", { required: true })}
-              width={"100%"}
-              minHeight={"240px"}
-              placeholder="방명록에 쓸 내용을 입력해주세요"
-              status={errors.contents ? "error" : "default"}
-            />
-            <Spacer y={0.5} />
-            <Input.Password
-              {...register("password", { required: true })}
-              placeholder="비밀번호를 입력해주세요"
-              width={"240px"}
-              status={errors.password ? "error" : "default"}
-              autoComplete={"new-password"}
-            >
-              <Row>
-                비밀번호
-                <Spacer x={0.3} />
-                <Tooltip
-                  text={
-                    "해당 게시물을 수정하거나 삭제하려면 이 비밀번호를 기억해야 합니다"
-                  }
-                  type={"dark"}
-                  placement={"rightStart"}
-                >
-                  <Info size={14} />
-                </Tooltip>
-              </Row>
-            </Input.Password>
-          </Modal.Content>
-          <Modal.Action passive onClick={() => setVisible(false)}>
-            취소하기
-          </Modal.Action>
-          <Modal.Action form={"post-board-form"} htmlType={"submit"}>
-            제출하기
-          </Modal.Action>
-        </Modal>
-      </form>
-    </>
+    <Modal open={visible} width={"60rem"} onClose={() => onClose()}>
+      <Modal.Title>{post.title}</Modal.Title>
+      <Modal.Subtitle>posted by {post.author}</Modal.Subtitle>
+      <Modal.Content>
+        <Row justify={"end"}>
+          <PostDeleteButton
+            postId={post.id}
+            onSuccess={handleSuccessDeletePost}
+          />
+        </Row>
+        <Spacer y={0.5} />
+        <Text
+          blockquote
+          style={{
+            whiteSpace: "pre-line",
+            backgroundColor: "#fdfdfd",
+            maxHeight: "45vh",
+            overflowY: "scroll",
+            marginTop: "0px",
+          }}
+        >
+          {post.contents}
+        </Text>
+        <Text
+          size={12}
+          style={{ textAlign: "right", margin: 0, color: "#888" }}
+        >
+          게시 시간: {formatUnixTimestampToString(post.createdDt.seconds)}
+        </Text>
+        {/*<Text*/}
+        {/*  size={12}*/}
+        {/*  style={{ textAlign: "right", margin: 0, color: "#888" }}*/}
+        {/*>*/}
+        {/*  수정 시간: {formatUnixTimestampToString(post.updatedDt.seconds)}*/}
+        {/*</Text>*/}
+        <Spacer y={0.5} />
+        <Divider y={0} />
+        <Spacer y={0.5} />
+        <Grid.Container gap={1}>
+          {Object.values(Emotion).map((emotion, i) => {
+            const onClickEmotion = handleClickEmotionFactory(post.id, emotion);
+            return (
+              <Grid
+                style={{ textAlign: "center" }}
+                key={`${post.id}-${emotion}`}
+                xs={8}
+                sm={4}
+                justify={"center"}
+              >
+                <EachEmotion
+                  emotion={emotion}
+                  count={post[emotion]}
+                  onClick={onClickEmotion}
+                />
+              </Grid>
+            );
+          })}
+        </Grid.Container>
+      </Modal.Content>
+    </Modal>
   );
 }

@@ -4,7 +4,7 @@ export enum PageTitle {
   HOME = "💒 사랑의 교회 제자훈련️ ❤️",
   ALL_VERSES = "📖 전체 암송구절",
   BY_WEEK = "🌈 제자훈련 주차별\n 말씀 보기",
-  TEST_RANDOM_EACH = "☝️ 한 문제씩 암송 하기",
+  TEST_RANDOM_EACH = "☝️ 한 말씀씩 암송 하기",
   TEST_ALL = "📝 전체 암송 시험",
   GUEST_BOARD = "📜 방명록",
 }

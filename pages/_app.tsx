@@ -1,7 +1,10 @@
-import "../styles/globals.scss";
+import { useState } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Hydrate } from "react-query/hydration";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
 import { CssBaseline, GeistProvider, Link, Page, Text } from "@geist-ui/react";
+import { ReactQueryDevtools } from "react-query/devtools";
 import HeadComp from "../components/head";
 import { LinkPath } from "../constants/links";
 import {
@@ -9,6 +12,7 @@ import {
   subTitleByLinkPath,
   titleByLinkPath,
 } from "../constants/titles";
+import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -17,11 +21,13 @@ function MyApp({ Component, pageProps }) {
   const title = titleByLinkPath.get(path);
   const subTitle = subTitleByLinkPath.get(path);
 
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <GeistProvider>
       <HeadComp />
       <CssBaseline />
-      <Page size={"small"}>
+      <Page size={path === LinkPath.GUEST_BOARD ? "large" : "small"}>
         <Page.Header>
           {path !== LinkPath.HOME && (
             <NextLink href={"/"}>
@@ -40,7 +46,12 @@ function MyApp({ Component, pageProps }) {
             </Text>
           )}
         </Page.Header>
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <Component {...pageProps} />
+          </Hydrate>
+          {typeof window !== undefined && <ReactQueryDevtools />}
+        </QueryClientProvider>
       </Page>
     </GeistProvider>
   );
