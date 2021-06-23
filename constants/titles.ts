@@ -1,7 +1,7 @@
 import { LinkPath } from "./links";
 
 export enum PageTitle {
-  HOME = "💒 사랑의 교회 제자훈련️ ❤️",
+  HOME = "💒 사랑의교회 제자훈련️ ❤️",
   ALL_VERSES = "📖 전체 암송구절",
   BY_WEEK = "🌈 제자훈련 주차별\n 말씀 보기",
   TEST_RANDOM_EACH = "☝️ 한 말씀씩 암송 하기",

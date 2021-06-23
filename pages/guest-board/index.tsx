@@ -17,23 +17,14 @@ import BoardPostModal from "../../components/board-post-modal";
 import { PostResponse } from "../../types";
 import { useMemo, useState } from "react";
 import { formatUnixTimestampToString } from "../../utils";
-import { queryKeys, server } from "../../constants/http";
+import { queryKeys } from "../../constants/http";
 import { Emotion, iconColorByEmotion } from "../../constants/emotion";
 
-export const getStaticProps: GetStaticProps<{ posts: PostResponse[] }> =
-  async () => {
-    const result = await fetch(`${server}/api/post`, { method: "GET" });
-    const posts = await result.json();
-    return { props: { posts }, revalidate: true };
-  };
-
-function GuestBoard({ posts }) {
-  const { error, data, refetch } = useQuery<{
+function GuestBoard() {
+  const { error, data, refetch, isLoading } = useQuery<{
     posts: PostResponse[];
-  }>(
-    queryKeys.POSTS,
-    () => fetch("/api/post", { method: "GET" }).then((res) => res.json()),
-    { initialData: posts }
+  }>(queryKeys.POSTS, () =>
+    fetch("/api/post", { method: "GET" }).then((res) => res.json())
   );
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -43,12 +34,14 @@ function GuestBoard({ posts }) {
     return data?.posts?.find((p) => p.id === targetPostId) || null;
   }, [data, targetPostId]);
 
+  if (isLoading) return "Loading...";
+
   if (error) return "An error has occurred: " + error;
 
   return (
     <Page.Content className={"contents-main"}>
       <Row justify={"center"}>
-        <CreateBoardPostModal onClose={async () => await refetch()} />
+        <CreateBoardPostModal onSuccessProp={refetch} />
       </Row>
       <Spacer y={1} />
       <BoardPostModal

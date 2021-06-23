@@ -17,7 +17,3 @@ export enum mutationKeys {
 const dev = process.env.NODE_ENV !== "production";
 
 export const postCollectionPath = dev ? "/posts-dev" : "/posts";
-
-export const server = dev
-  ? "http://localhost:3000"
-  : "https://sarang-jeja-bible-recitation.vercel.app";

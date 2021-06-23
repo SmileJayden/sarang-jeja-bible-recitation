@@ -25,10 +25,10 @@ type BoardPostFormData = {
 };
 
 type Props = {
-  onClose?: () => void;
+  onSuccessProp?: () => void;
 };
 
-export default function CreateBoardPostModal({ onClose }: Props) {
+export default function CreateBoardPostModal({ onSuccessProp }: Props) {
   const { mutate } = useMutation(
     "createPost",
     ({ author, password, title, contents }: BoardPostFormData) =>
@@ -38,6 +38,7 @@ export default function CreateBoardPostModal({ onClose }: Props) {
       }).then((res) => res.json())
   );
 
+  const [submitLoading, setSubmitLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
   const [, setToast] = useToasts();
@@ -60,15 +61,24 @@ export default function CreateBoardPostModal({ onClose }: Props) {
   });
 
   const onSubmit = useCallback(
-    handleSubmit(({ author, contents, title, password }) => {
+    handleSubmit(async ({ author, contents, title, password }) => {
+      setSubmitLoading(true);
       window.localStorage.setItem("author", author);
-      mutate({ author, contents, title, password });
-      setVisible(false);
-      setToast({
-        text: "방명록 생성에 성공하였습니다!",
-        type: "success",
-      });
-      reset({ ...defaultValues, author });
+      mutate(
+        { author, contents, title, password },
+        {
+          onSuccess: async () => {
+            await onSuccessProp();
+            setSubmitLoading(false);
+            setVisible(false);
+            setToast({
+              text: "방명록 생성에 성공하였습니다!",
+              type: "success",
+            });
+            reset({ ...defaultValues, author });
+          },
+        }
+      );
     }),
     [reset, setToast]
   );
@@ -84,7 +94,6 @@ export default function CreateBoardPostModal({ onClose }: Props) {
           width={"60rem"}
           onClose={() => {
             setVisible(false);
-            onClose();
           }}
         >
           <Modal.Title>방명록 쓰기</Modal.Title>
@@ -146,7 +155,11 @@ export default function CreateBoardPostModal({ onClose }: Props) {
           <Modal.Action passive onClick={() => setVisible(false)}>
             취소하기
           </Modal.Action>
-          <Modal.Action form={"post-board-form"} htmlType={"submit"}>
+          <Modal.Action
+            form={"post-board-form"}
+            htmlType={"submit"}
+            loading={submitLoading}
+          >
             제출하기
           </Modal.Action>
         </Modal>
@@ -156,5 +169,5 @@ export default function CreateBoardPostModal({ onClose }: Props) {
 }
 
 CreateBoardPostModal.defaultProps = {
-  onClose: () => {},
+  onSuccessProp: () => {},
 };
