@@ -9,6 +9,7 @@ import {
   Divider,
   Row,
 } from "@geist-ui/react";
+import { XSquare } from "@geist-ui/react-icons";
 import { IVerse } from "../../types";
 import { checkIsAnswerCorrect, getAnswerDiff } from "../../utils";
 import { useMediaQuery } from "react-responsive";
@@ -51,41 +52,59 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
   };
 
   const renderStatusComp = (quizStatus: QuizStatus) => {
-    switch (quizStatus) {
-      case QuizStatus.CORRECT:
-        return (
+    if (quizStatus === QuizStatus.NOT_SUBMITTED) return <></>;
+
+    const contentByStatus = {
+      [QuizStatus.CORRECT]: (
+        <Text
+          blockquote
+          style={{
+            backgroundColor: statusHighlighted ? "#dce9fc" : "#ebf3ff",
+            borderColor: "#b0c0ff",
+          }}
+        >
+          🙆‍♂️ 정답입니다! 😃 👍 👍 👍 👍 👍
+        </Text>
+      ),
+      [QuizStatus.WRONG]: (
+        <Text
+          blockquote
+          style={{
+            backgroundColor: statusHighlighted ? "#fff0ed" : "#fff8f7",
+            borderColor: "#ffc2cf",
+          }}
+        >
+          <Text>🙅‍♀️ 오답입니다! 🥲</Text>
+          <Text>📕 오답노트 ⬇️</Text>
           <Text
-            blockquote
-            style={{
-              backgroundColor: statusHighlighted ? "#dce9fc" : "#ebf3ff",
-              borderColor: "#b0c0ff",
+            dangerouslySetInnerHTML={{
+              __html: getAnswerDiff(answer, contents),
             }}
-          >
-            🙆‍♂️ 정답입니다! 😃 👍 👍 👍 👍 👍
-          </Text>
-        );
-      case QuizStatus.WRONG:
-        return (
-          <Text
-            blockquote
-            style={{
-              backgroundColor: statusHighlighted ? "#fff0ed" : "#fff8f7",
-              borderColor: "#ffc2cf",
-            }}
-          >
-            <Text>🙅‍♀️ 오답입니다! 🥲</Text>
-            <Text>📕 오답노트 ⬇️</Text>
-            <Text
-              dangerouslySetInnerHTML={{
-                __html: getAnswerDiff(answer, contents),
-              }}
-            />
-          </Text>
-        );
-      case QuizStatus.NOT_SUBMITTED:
-      default:
-        return <></>;
-    }
+          />
+        </Text>
+      ),
+    };
+    const borderColorByStatus = {
+      [QuizStatus.CORRECT]: "blue",
+      [QuizStatus.WRONG]: "red",
+    };
+
+    return (
+      <div style={{ position: "relative" }}>
+        <div
+          style={{
+            position: "absolute",
+            right: "7px",
+            top: "7px",
+            cursor: "pointer",
+          }}
+          onClick={() => setQuizStatus(QuizStatus.NOT_SUBMITTED)}
+        >
+          <XSquare color={borderColorByStatus[quizStatus] || "black"} />
+        </div>
+        {contentByStatus[quizStatus] || <></>}
+      </div>
+    );
   };
 
   const checkKeyDown = (e) => {
@@ -133,11 +152,24 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
           </Button>
         </Row>
         {answerOpened && (
-          <Text
-            blockquote
-            dangerouslySetInnerHTML={{ __html: contents }}
-            style={{ whiteSpace: "pre-wrap" }}
-          />
+          <div style={{ position: "relative" }}>
+            <div
+              style={{
+                position: "absolute",
+                right: "7px",
+                top: "7px",
+                cursor: "pointer",
+              }}
+              onClick={() => setAnswerOpened(false)}
+            >
+              <XSquare />
+            </div>
+            <Text
+              blockquote
+              dangerouslySetInnerHTML={{ __html: contents }}
+              style={{ whiteSpace: "pre-wrap" }}
+            />
+          </div>
         )}
       </Card.Content>
     </Card>

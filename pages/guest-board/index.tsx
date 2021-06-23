@@ -65,7 +65,7 @@ function GuestBoard() {
               }}
             >
               <Card.Content style={{ padding: "16pt 8pt 5rem" }}>
-                <Text b h4>
+                <Text b h4 style={{ overflowWrap: "break-word" }}>
                   {post.title}
                 </Text>
                 <Text
