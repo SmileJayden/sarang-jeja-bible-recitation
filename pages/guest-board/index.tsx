@@ -93,8 +93,13 @@ function GuestBoard() {
                 </Text>
                 <Divider y={0} />
                 <Row justify={"space-between"} align={"middle"}>
-                  <Col>
-                    <Text style={{ fontSize: "0.85rem", margin: "0.5rem 0" }}>
+                  <Col span={48}>
+                    <Text
+                      style={{
+                        fontSize: "0.85rem",
+                        margin: "0.5rem 0",
+                      }}
+                    >
                       by {post.author}
                     </Text>
                   </Col>
