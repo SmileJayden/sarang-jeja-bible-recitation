@@ -39,7 +39,7 @@ function GuestBoard() {
 
   if (isLoading)
     return (
-      <Row style={{ padding: "10px 0" }}>
+      <Row style={{ padding: "150px 0 10px 0" }}>
         <Loading>Loading</Loading>
       </Row>
     );

@@ -1,10 +1,17 @@
 import NextLink, { LinkProps } from "next/link";
-import { Card, Grid, Text, Link, Page, Divider } from "@geist-ui/react";
+import {
+  Card,
+  Grid,
+  Text,
+  Link,
+  Page,
+  Divider,
+  Loading,
+} from "@geist-ui/react";
 import { LinkPath } from "../constants/links";
 import firebase from "firebase";
 import { firebaseConfig } from "../constants/firebase";
 import { postCollectionPath } from "../constants/http";
-import { useSafeState } from "react-query/types/devtools/utils";
 import { useEffect, useState } from "react";
 import { PostResponse } from "../types";
 
@@ -62,15 +69,19 @@ const db = firebase.firestore();
 
 export default function Home() {
   const [firstPost, setFirstPost] = useState<null | PostResponse>(null);
+
   useEffect(() => {
     db.collection(postCollectionPath)
-      .orderBy("createdDt", "desc")
+      .where("deletedDt", "==", null)
+      .orderBy("updatedDt", "desc")
       .limit(1)
       .get()
       .then((querySnapshot) => {
         if (!querySnapshot.empty) {
           const queryDocumentSnapshot = querySnapshot.docs[0];
           setFirstPost({ ...queryDocumentSnapshot.data() } as PostResponse);
+        } else {
+          setFirstPost(null);
         }
       });
   }, []);
@@ -115,7 +126,7 @@ export default function Home() {
                         >{`${firstPost.title} (by ${firstPost.author})`}</Text>
                       </>
                     ) : (
-                      "방멱록 쓰러가기"
+                      <Loading />
                     )}
                   </Text>
                 </Card>

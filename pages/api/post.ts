@@ -18,7 +18,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const db = firebase.firestore();
 
   if (req.method === HttpMethod.GET) {
-    const snapshot = await db.collection(postCollectionPath).get();
+    const snapshot = await db
+      .collection(postCollectionPath)
+      .where("deletedDt", "==", null)
+      .orderBy("updatedDt", "desc")
+      .get();
 
     const resultPosts: PostResponse[] = [];
     snapshot.forEach((doc) => {
@@ -27,9 +31,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     res.status(200).json({
-      posts: resultPosts
-        .filter((post) => post.deletedDt === null)
-        .sort((x, y) => (+x.createdDt < +y.createdDt ? 1 : -1)),
+      posts: resultPosts,
     });
     res.end();
     return;

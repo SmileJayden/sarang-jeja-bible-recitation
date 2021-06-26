@@ -16,5 +16,5 @@ export enum mutationKeys {
 
 const dev = process.env.NODE_ENV !== "production";
 
-export const postCollectionPath = dev ? "/posts-dev" : "/posts";
+export const postCollectionPath = dev ? "/posts" : "/posts";
 

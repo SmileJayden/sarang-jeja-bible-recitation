@@ -19,7 +19,7 @@ function AllVerses() {
       : ALL_VERSES;
 
   const caption = useMemo(() => {
-    if (count) return `무작위로 선별된 ${count}개 말씀 구절`;
+    if (count) return `무작위의 ${count}개 말씀 구절`;
     return "전체 암송 말씀 구절";
   }, [count]);
 

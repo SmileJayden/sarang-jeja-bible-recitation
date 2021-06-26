@@ -15,7 +15,7 @@ export enum PageSubTitle {
   BY_WEEK = "주차별로 말씀 보기",
   TEST_RANDOM_EACH = "",
   TEST_ALL = "",
-  GUEST_BOARD = "❤️ 사랑을 담은 마음으로 하고싶은 말을 적어보세요 ❤️",
+  GUEST_BOARD = "❤️ 사랑을 담아 하고싶은 말을 적어보아요 ❤️",
 }
 
 export const titleByLinkPath = new Map<LinkPath, PageTitle>([
