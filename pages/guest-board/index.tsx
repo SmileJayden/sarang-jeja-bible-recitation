@@ -4,6 +4,7 @@ import {
   Col,
   Divider,
   Grid,
+  Loading,
   Page,
   Row,
   Spacer,
@@ -36,7 +37,12 @@ function GuestBoard() {
     return data?.posts?.find((p) => p.id === targetPostId) || null;
   }, [data, targetPostId]);
 
-  if (isLoading) return "Loading...";
+  if (isLoading)
+    return (
+      <Row style={{ padding: "10px 0" }}>
+        <Loading>Loading</Loading>
+      </Row>
+    );
 
   if (error) return "An error has occurred: " + error;
 
