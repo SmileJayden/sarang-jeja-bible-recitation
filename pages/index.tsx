@@ -1,6 +1,12 @@
 import NextLink, { LinkProps } from "next/link";
 import { Card, Grid, Text, Link, Page, Divider } from "@geist-ui/react";
 import { LinkPath } from "../constants/links";
+import firebase from "firebase";
+import { firebaseConfig } from "../constants/firebase";
+import { postCollectionPath } from "../constants/http";
+import { useSafeState } from "react-query/types/devtools/utils";
+import { useEffect, useState } from "react";
+import { PostResponse } from "../types";
 
 type LinkCard = {
   label: string;
@@ -44,16 +50,31 @@ const linkCards: LinkCard[] = [
       href: { pathname: LinkPath.TEST_ALL, query: { count: 20 } },
     },
   },
-  {
-    label: "📜 방명록",
-    description: "방명록 쓰러 가기",
-    linkProps: {
-      href: { pathname: LinkPath.GUEST_BOARD },
-    },
-  },
 ];
 
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
+}
+
+const db = firebase.firestore();
+
 export default function Home() {
+  const [firstPost, setFirstPost] = useState<null | PostResponse>(null);
+  useEffect(() => {
+    db.collection(postCollectionPath)
+      .orderBy("createdDt", "desc")
+      .limit(1)
+      .get()
+      .then((querySnapshot) => {
+        if (!querySnapshot.empty) {
+          const queryDocumentSnapshot = querySnapshot.docs[0];
+          setFirstPost({ ...queryDocumentSnapshot.data() } as PostResponse);
+        }
+      });
+  }, []);
+
   return (
     <>
       <Page.Content className={"contents-main"}>
@@ -70,6 +91,29 @@ export default function Home() {
               </NextLink>
             </Grid>
           ))}
+          <Grid xs={24} sm={12} key={`link-card-post-board`}>
+            <NextLink href={{ pathname: LinkPath.GUEST_BOARD }}>
+              <Link style={{ width: "100%" }}>
+                <Card shadow width={"100%"}>
+                  <Text h3>📜 방명록 &rarr;</Text>
+                  <Text p>
+                    {firstPost ? (
+                      <>
+                        <Text span>최신 글: </Text>
+                        <Text
+                          span
+                          b
+                          style={{ overflowY: "scroll" }}
+                        >{`${firstPost.title} (by ${firstPost.author})`}</Text>
+                      </>
+                    ) : (
+                      "방멱록 쓰러가기"
+                    )}
+                  </Text>
+                </Card>
+              </Link>
+            </NextLink>
+          </Grid>
         </Grid.Container>
       </Page.Content>
       <Page.Footer style={{ textAlign: "center" }}>
