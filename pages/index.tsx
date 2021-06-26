@@ -96,7 +96,15 @@ export default function Home() {
               <Link style={{ width: "100%" }}>
                 <Card shadow width={"100%"}>
                   <Text h3>📜 방명록 &rarr;</Text>
-                  <Text p>
+                  <Text
+                    p
+                    style={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      maxWidth: "100%",
+                    }}
+                  >
                     {firstPost ? (
                       <>
                         <Text span>최신 글: </Text>
