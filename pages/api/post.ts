@@ -85,7 +85,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     res.status(200).json({
-      deletedPOst: doc.data(),
+      deletedPost: doc.data(),
       message: `DELETE ${parsedReqBody.postId} post Success`,
     });
     res.end();
