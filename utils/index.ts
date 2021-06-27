@@ -57,3 +57,6 @@ export const formatUnixTimestampToString = (dateTime: number): string => {
     new Date(dateTime * 1000).toLocaleTimeString()
   );
 };
+
+export const getChapterLabel = (book: string) =>
+  book === "시편" ? "편" : "장";

@@ -11,7 +11,11 @@ import {
 } from "@geist-ui/react";
 import { XSquare } from "@geist-ui/react-icons";
 import { IVerse } from "../../types";
-import { checkIsAnswerCorrect, getAnswerDiff } from "../../utils";
+import {
+  checkIsAnswerCorrect,
+  getAnswerDiff,
+  getChapterLabel,
+} from "../../utils";
 import { useMediaQuery } from "react-responsive";
 
 enum QuizStatus {
@@ -119,7 +123,9 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
   return (
     <Card>
       <Card.Content>
-        <Text b h4>{`${book} ${chapter}장 ${verse}절`}</Text>
+        <Text b h4>{`${book} ${chapter}${getChapterLabel(
+          book
+        )} ${verse}절`}</Text>
       </Card.Content>
       <Divider y={0} />
       <Card.Content>
