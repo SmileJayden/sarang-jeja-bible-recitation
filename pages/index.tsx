@@ -71,19 +71,23 @@ export default function Home() {
   const [firstPost, setFirstPost] = useState<null | PostResponse>(null);
 
   useEffect(() => {
-    db.collection(postCollectionPath)
-      .where("deletedDt", "==", null)
-      .orderBy("updatedDt", "desc")
-      .limit(1)
-      .get()
-      .then((querySnapshot) => {
-        if (!querySnapshot.empty) {
-          const queryDocumentSnapshot = querySnapshot.docs[0];
-          setFirstPost({ ...queryDocumentSnapshot.data() } as PostResponse);
-        } else {
-          setFirstPost(null);
-        }
-      });
+    const fetchFirstPost = async () => {
+      const querySnapshot = await db
+        .collection(postCollectionPath)
+        .where("deletedDt", "==", null)
+        .orderBy("updatedDt", "desc")
+        .limit(1)
+        .get();
+
+      if (!querySnapshot.empty) {
+        const queryDocumentSnapshot = querySnapshot.docs[0];
+        setFirstPost({ ...queryDocumentSnapshot.data() } as PostResponse);
+      } else {
+        setFirstPost(null);
+      }
+    };
+
+    fetchFirstPost();
   }, []);
 
   return (
