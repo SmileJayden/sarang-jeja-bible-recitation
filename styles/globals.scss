@@ -38,7 +38,7 @@ $mobile-max-width: 420;
 @media (max-width: #{$mobile-max-width}px) {
   .contents-main {
     padding-top: calc(16pt * 0.75) !important;
-    padding-bottom: 0 !important;
+    padding-bottom: 4rem !important;
   }
   h2 {
     font-size: 1.5rem !important;
