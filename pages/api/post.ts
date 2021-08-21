@@ -18,11 +18,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const db = firebase.firestore();
 
   if (req.method === HttpMethod.GET) {
-    const snapshot = await db
+    const count = req.query.count;
+
+    let query = db
       .collection(postCollectionPath)
       .where("deletedDt", "==", null)
-      .orderBy("updatedDt", "desc")
-      .get();
+      .orderBy("updatedDt", "desc");
+    if (typeof count === "string") query = query.limit(parseInt(count));
+    const snapshot = await query.get();
 
     const resultPosts: PostResponse[] = [];
     snapshot.forEach((doc) => {
