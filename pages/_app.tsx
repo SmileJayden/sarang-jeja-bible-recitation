@@ -21,7 +21,9 @@ function MyApp({ Component, pageProps }) {
   const title = titleByLinkPath.get(path);
   const subTitle = subTitleByLinkPath.get(path);
 
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () => new QueryClient({ defaultOptions: { queries: { suspense: true } } })
+  );
 
   return (
     <GeistProvider>
