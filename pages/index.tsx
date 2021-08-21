@@ -1,4 +1,6 @@
+import { ReactNode, Suspense } from "react";
 import NextLink, { LinkProps } from "next/link";
+import dynamic from "next/dynamic";
 import {
   Card,
   Grid,
@@ -6,18 +8,14 @@ import {
   Link,
   Page,
   Divider,
-  Loading,
+  Loading as GeistLoading,
 } from "@geist-ui/react";
 import { LinkPath } from "../constants/links";
-import firebase from "firebase";
-import { firebaseConfig } from "../constants/firebase";
-import { postCollectionPath } from "../constants/http";
-import { useEffect, useState } from "react";
-import { PostResponse } from "../types";
+const FirstPost = dynamic(() => import("../components/first-post"));
 
 type LinkCard = {
   label: string;
-  description: string;
+  description: string | ReactNode;
   linkProps: LinkProps;
 };
 
@@ -57,39 +55,24 @@ const linkCards: LinkCard[] = [
       href: { pathname: LinkPath.TEST_ALL, query: { count: 20 } },
     },
   },
+  {
+    label: "📜 방명록",
+    description: <FirstPost />,
+    linkProps: {
+      href: { pathname: LinkPath.GUEST_BOARD },
+    },
+  },
 ];
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app(); // if already initialized, use that one
+function Loading() {
+  return (
+    <div style={{ marginTop: "1rem", height: "26px" }}>
+      <GeistLoading />
+    </div>
+  );
 }
 
-const db = firebase.firestore();
-
 export default function Home() {
-  const [firstPost, setFirstPost] = useState<null | PostResponse>(null);
-
-  useEffect(() => {
-    const fetchFirstPost = async () => {
-      const querySnapshot = await db
-        .collection(postCollectionPath)
-        .where("deletedDt", "==", null)
-        .orderBy("updatedDt", "desc")
-        .limit(1)
-        .get();
-
-      if (!querySnapshot.empty) {
-        const queryDocumentSnapshot = querySnapshot.docs[0];
-        setFirstPost({ ...queryDocumentSnapshot.data() } as PostResponse);
-      } else {
-        setFirstPost(null);
-      }
-    };
-
-    fetchFirstPost();
-  }, []);
-
   return (
     <>
       <Page.Content className={"contents-main"}>
@@ -100,43 +83,18 @@ export default function Home() {
                 <Link style={{ width: "100%" }}>
                   <Card shadow width={"100%"}>
                     <Text h3>{label} &rarr;</Text>
-                    <Text p>{description}</Text>
+                    {typeof description === "string" ? (
+                      <Text p>{description}</Text>
+                    ) : (
+                      <Suspense fallback={<Loading />}>
+                        <FirstPost />
+                      </Suspense>
+                    )}
                   </Card>
                 </Link>
               </NextLink>
             </Grid>
           ))}
-          <Grid xs={24} sm={12} key={`link-card-post-board`}>
-            <NextLink href={{ pathname: LinkPath.GUEST_BOARD }}>
-              <Link style={{ width: "100%" }}>
-                <Card shadow width={"100%"}>
-                  <Text h3>📜 방명록 &rarr;</Text>
-                  <Text
-                    p
-                    style={{
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      maxWidth: "100%",
-                    }}
-                  >
-                    {firstPost ? (
-                      <>
-                        <Text span>최신 글: </Text>
-                        <Text
-                          span
-                          b
-                          style={{ overflowY: "scroll" }}
-                        >{`${firstPost.title} (by ${firstPost.author})`}</Text>
-                      </>
-                    ) : (
-                      <Loading />
-                    )}
-                  </Text>
-                </Card>
-              </Link>
-            </NextLink>
-          </Grid>
         </Grid.Container>
       </Page.Content>
       <Page.Footer style={{ textAlign: "center" }}>
