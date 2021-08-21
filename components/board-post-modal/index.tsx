@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useMutation } from "react-query";
-import { Col, Divider, Grid, Modal, Row, Spacer, Text } from "@geist-ui/react";
-import { HttpMethod, mutationKeys } from "../../constants/http";
+import { Divider, Grid, Modal, Row, Spacer, Text } from "@geist-ui/react";
+import { HttpMethod, MutationKeys } from "../../constants/http";
 import { PostResponse } from "../../types";
 import { formatUnixTimestampToString } from "../../utils";
 import { Emotion } from "../../constants/emotion";
@@ -23,7 +23,7 @@ type Props = {
 
 export default function BoardPostModal({ post, visible, onClose }: Props) {
   const { mutate: emitEmotionMutation } = useMutation<{}, {}, PostEmotionBody>(
-    mutationKeys.EDIT_EMOTION,
+    MutationKeys.EDIT_EMOTION,
     ({ postId, emotion, incCount }) =>
       fetch("/api/emotion", {
         method: HttpMethod.PUT,
@@ -97,7 +97,7 @@ export default function BoardPostModal({ post, visible, onClose }: Props) {
             return (
               <Grid
                 style={{ textAlign: "center" }}
-                key={`${post.id}-${emotion}`}
+                key={`${post.id}-${emotion}-${i}`}
                 xs={8}
                 sm={4}
                 justify={"center"}

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Trash2 } from "@geist-ui/react-icons";
 import { useMediaQuery } from "react-responsive";
 import { useMutation } from "react-query";
-import { HttpMethod, mutationKeys } from "../../constants/http";
+import { HttpMethod, MutationKeys } from "../../constants/http";
 
 type DeletePostBody = {
   postId: string;
@@ -26,7 +26,7 @@ export default function PostDeleteButton({ postId, onSuccess }: Props) {
     isError,
     isLoading,
   } = useMutation<{}, {}, DeletePostBody>(
-    mutationKeys.DELETE_POST,
+    MutationKeys.DELETE_POST,
     ({ postId, password }) =>
       fetch("/api/post", {
         method: HttpMethod.DELETE,
@@ -61,7 +61,7 @@ export default function PostDeleteButton({ postId, onSuccess }: Props) {
           });
           onSuccess();
         },
-        onError: (err) => {
+        onError: () => {
           setToast({
             text: "비밀번호가 틀렸습니다. 게시글 삭제에 실패했습니다.",
             type: "error",

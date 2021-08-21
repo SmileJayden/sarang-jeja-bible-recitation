@@ -5,16 +5,16 @@ export enum HttpMethod {
   DELETE = "DELETE",
 }
 
-export enum queryKeys {
+export enum QueryKeys {
   POSTS = "posts",
+  FIRST_POST = "first-post",
 }
 
-export enum mutationKeys {
+export enum MutationKeys {
   DELETE_POST = "delete-post",
   EDIT_EMOTION = "edit-emotion",
 }
 
-const dev = process.env.NODE_ENV !== "production";
+const dev = process.env.NODE_ENV === "development";
 
 export const postCollectionPath = dev ? "/posts" : "/posts";
-
