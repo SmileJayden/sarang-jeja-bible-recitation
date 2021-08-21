@@ -34,3 +34,7 @@ yarn-error.log*
 .vercel
 
 .idea
+
+/public/sw.*
+/public/workbox-*
+/public/fallback-development.js
