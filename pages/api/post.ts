@@ -1,5 +1,18 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import {
+  addDoc,
+  doc,
+  getFirestore,
+  Timestamp,
+  collection,
+  where,
+  getDocs,
+  orderBy,
+  query,
+  limit,
+  QueryConstraint,
+  runTransaction,
+} from "firebase/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import { postCollectionPath } from "../../constants/http";
@@ -7,29 +20,31 @@ import { PostDto, PostResponse } from "../../types";
 import { HttpMethod } from "../../constants/http";
 import { Emotion } from "../../constants/emotion";
 import { firebaseConfig } from "../../constants/firebase";
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app(); // if already initialized, use that one
-}
+import { CollectionReference } from "@firebase/firestore";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const db = firebase.firestore();
+  const firebaseApp = initializeApp(firebaseConfig);
+  const db = getFirestore(firebaseApp);
+  const postRef = collection(
+    db,
+    postCollectionPath
+  ) as CollectionReference<PostDto>; // generic 지원 해줘...
 
   if (req.method === HttpMethod.GET) {
     const count = req.query.count;
+    const queryConstraints: QueryConstraint[] = [
+      where("deletedDt", "==", null),
+      orderBy("updatedDt", "desc"),
+    ];
+    if (typeof count === "string") {
+      queryConstraints.push(limit(parseInt(count)));
+    }
 
-    let query = db
-      .collection(postCollectionPath)
-      .where("deletedDt", "==", null)
-      .orderBy("updatedDt", "desc");
-    if (typeof count === "string") query = query.limit(parseInt(count));
-    const snapshot = await query.get();
+    const snapshot = await getDocs(query(postRef, ...queryConstraints));
 
     const resultPosts: PostResponse[] = [];
     snapshot.forEach((doc) => {
-      const postResponse = doc.data() as Omit<PostResponse, "id">;
+      const postResponse = doc.data();
       resultPosts.push({ ...postResponse, id: doc.id });
     });
 
@@ -42,43 +57,45 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === HttpMethod.POST) {
     const parsedReqBody = { ...JSON.parse(req.body) };
-    const newPost = await db.collection(postCollectionPath).add({
+    await addDoc<PostDto>(postRef, {
       ...parsedReqBody,
       password: await bcrypt.hash(
         parsedReqBody.password,
         await bcrypt.genSalt(6)
       ),
-      createdDt: firebase.firestore.Timestamp.fromDate(new Date()),
-      updatedDt: new Date(),
+      createdDt: Timestamp.fromDate(new Date()),
+      updatedDt: Timestamp.fromDate(new Date()),
       deletedDt: null,
       ...Object.values(Emotion).reduce(
         (acc, emotion) => ({ ...acc, [emotion]: 0 }),
         {}
       ),
     } as PostDto);
-    res
-      .status(200)
-      .json({ post: await newPost.get().then((snapshot) => snapshot.data()) });
+
+    res.status(200);
     res.end();
     return;
   }
 
   if (req.method === HttpMethod.DELETE) {
     const parsedReqBody = { ...JSON.parse(req.body) };
-
-    const targetPostRef = await db
-      .collection(postCollectionPath)
-      .doc(parsedReqBody.postId);
-    const doc = await targetPostRef.get();
-    const data = doc.data();
-
-    const match = await bcrypt.compare(parsedReqBody.password, data.password);
-    if (!match) throw new Error("비밀번호가 맞지 않습니다");
+    const targetPostRef = doc(postRef, parsedReqBody.postId);
 
     try {
-      const transactionResult = await db.runTransaction(async (t) => {
+      const transactionResult = await runTransaction(db, async (t) => {
+        const targetPostDoc = await t.get(targetPostRef);
+        if (!targetPostDoc.exists()) {
+          throw "Document does not exist!";
+        }
+
+        const match = await bcrypt.compare(
+          parsedReqBody.password,
+          targetPostDoc.data().password
+        );
+        if (!match) throw new Error("비밀번호가 맞지 않습니다");
+
         await t.update(targetPostRef, {
-          deletedDt: new Date(),
+          deletedDt: Timestamp.fromDate(new Date()),
         });
         return `[DELETE]: Post ${parsedReqBody.postId} delete success`;
       });
@@ -88,7 +105,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     res.status(200).json({
-      deletedPost: doc.data(),
       message: `DELETE ${parsedReqBody.postId} post Success`,
     });
     res.end();

@@ -5,14 +5,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@geist-ui/react": "^2.1.5",
     "@geist-ui/react-icons": "^1.0.1",
     "bcrypt": "^5.0.1",
     "classnames": "^2.3.1",
-    "firebase": "^8.6.8",
+    "firebase": "9.9.4",
     "next": "^11.0.0",
     "next-pwa": "^5.2.24",
     "react": "^0.0.0-experimental-64f83a6fd-20210819",
@@ -28,6 +29,6 @@
     "@types/react": "^17.0.8",
     "@types/react-responsive": "^8.0.2",
     "prettier": "^2.3.0",
-    "typescript": "^4.3.2"
+    "typescript": "^4.8.4"
   }
 }

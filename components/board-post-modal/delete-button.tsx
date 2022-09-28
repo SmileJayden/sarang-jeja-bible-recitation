@@ -1,5 +1,5 @@
 import { Button, Input, Modal, Spacer, useToasts } from "@geist-ui/react";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Trash2 } from "@geist-ui/react-icons";
 import { useMediaQuery } from "react-responsive";
 import { useMutation } from "react-query";
@@ -34,7 +34,7 @@ export default function PostDeleteButton({ postId, onSuccess }: Props) {
       }).then((res) => res.json())
   );
 
-  const handleChangeInput = (e) => {
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
@@ -59,7 +59,7 @@ export default function PostDeleteButton({ postId, onSuccess }: Props) {
             text: "게시글 삭제에 성공하였습니다",
             type: "success",
           });
-          onSuccess();
+          onSuccess?.();
         },
         onError: () => {
           setToast({
@@ -111,7 +111,3 @@ export default function PostDeleteButton({ postId, onSuccess }: Props) {
     </>
   );
 }
-
-PostDeleteButton.defualtProps = {
-  onSuccess: () => {},
-};

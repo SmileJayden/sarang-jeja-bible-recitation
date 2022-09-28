@@ -2,18 +2,12 @@ import { useCallback } from "react";
 import { useMutation } from "react-query";
 import { Divider, Grid, Modal, Row, Spacer, Text } from "@geist-ui/react";
 import { HttpMethod, MutationKeys } from "../../constants/http";
-import { PostResponse } from "../../types";
+import { PostEmotionDto, PostResponse } from "../../types";
 import { formatUnixTimestampToString } from "../../utils";
 import { Emotion } from "../../constants/emotion";
 import EachEmotion from "./each-emotion";
 import PostDeleteButton from "./delete-button";
 import { debounce } from "../../hooks";
-
-type PostEmotionBody = {
-  postId: string;
-  emotion: Emotion;
-  incCount: number;
-};
 
 type Props = {
   post: PostResponse | null;
@@ -22,7 +16,7 @@ type Props = {
 };
 
 export default function BoardPostModal({ post, visible, onClose }: Props) {
-  const { mutate: emitEmotionMutation } = useMutation<{}, {}, PostEmotionBody>(
+  const { mutate: emitEmotionMutation } = useMutation<{}, {}, PostEmotionDto>(
     MutationKeys.EDIT_EMOTION,
     ({ postId, emotion, incCount }) =>
       fetch("/api/emotion", {
@@ -37,7 +31,7 @@ export default function BoardPostModal({ post, visible, onClose }: Props) {
       const postMutation = debounce(() => {
         emitEmotionMutation({ postId, emotion, incCount });
         incCount = 0;
-      }, 400);
+      }, 800);
       return () => {
         incCount++;
         postMutation();
@@ -50,7 +44,7 @@ export default function BoardPostModal({ post, visible, onClose }: Props) {
     onClose();
   };
 
-  if (!post) return <div />;
+  if (!post) return null;
 
   return (
     <Modal open={visible} width={"60rem"} onClose={() => onClose()}>
@@ -82,12 +76,6 @@ export default function BoardPostModal({ post, visible, onClose }: Props) {
         >
           게시 시간: {formatUnixTimestampToString(post.createdDt.seconds)}
         </Text>
-        {/*<Text*/}
-        {/*  size={12}*/}
-        {/*  style={{ textAlign: "right", margin: 0, color: "#888" }}*/}
-        {/*>*/}
-        {/*  수정 시간: {formatUnixTimestampToString(post.updatedDt.seconds)}*/}
-        {/*</Text>*/}
         <Spacer y={0.5} />
         <Divider y={0} />
         <Spacer y={0.5} />

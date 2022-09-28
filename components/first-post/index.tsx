@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { Text } from "@geist-ui/react";
 import queryString from "querystring";
 import { useQuery } from "react-query";
@@ -6,9 +5,7 @@ import { PostResponse } from "../../types";
 import { HttpMethod, QueryKeys } from "../../constants/http";
 
 function FirstPost() {
-  const {
-    data: { posts },
-  } = useQuery<{
+  const { data } = useQuery<{
     posts: PostResponse[];
   }>(QueryKeys.FIRST_POST, () => {
     const params = { count: 1 };
@@ -16,7 +13,12 @@ function FirstPost() {
       method: HttpMethod.GET,
     }).then((res) => res.json());
   });
-  const firstPost = useMemo(() => posts[0], [posts]);
+
+  const firstPost = data?.posts[0];
+
+  if (firstPost == null) {
+    return null;
+  }
 
   return (
     <Text

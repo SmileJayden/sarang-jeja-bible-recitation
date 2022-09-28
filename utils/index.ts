@@ -43,9 +43,12 @@ export const getShuffledArray = <T>(array: T[]): T[] => {
   const resArray = [...array];
   for (let i = 0; i < array.length; i++) {
     const j = Math.floor(Math.random() * (i + 1));
-    const temp = resArray[i];
-    resArray[i] = resArray[j];
-    resArray[j] = temp;
+    const a = resArray[i];
+    const b = resArray[j];
+    if (a != null && b != null) {
+      resArray[i] = b;
+      resArray[j] = a;
+    }
   }
   return resArray;
 };

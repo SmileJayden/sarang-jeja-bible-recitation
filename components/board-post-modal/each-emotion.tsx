@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cn from "classnames";
 import { Badge, Tooltip } from "@geist-ui/react";
 import {
@@ -7,7 +7,6 @@ import {
   iconColorByEmotion,
   tooltipMsgByEmotion,
 } from "../../constants/emotion";
-import { debounce } from "../../hooks";
 
 type Props = {
   emotion: Emotion;
@@ -18,16 +17,26 @@ type Props = {
 
 export default function EachEmotion({ emotion, count, onClick, size }: Props) {
   const [value, setValue] = useState(count);
+  const [shakeAt, setShakeAt] = useState(0);
   const [shake, setShake] = useState(false);
 
-  const debouncedShake = debounce(() => setShake(false), 1000);
-
   const handleClick = () => {
-    setShake(true);
-    debouncedShake(false);
+    setShakeAt((p) => p + 1);
     setValue((prev) => prev + 1);
-    onClick();
+    onClick?.();
   };
+
+  useEffect(() => {
+    if (shakeAt > 0) {
+      setShake(true);
+      const pid = window.setTimeout(() => {
+        setShake(false);
+      }, 600);
+      return () => {
+        window.clearTimeout(pid);
+      };
+    }
+  }, [shakeAt]);
 
   return (
     <Tooltip
@@ -40,7 +49,7 @@ export default function EachEmotion({ emotion, count, onClick, size }: Props) {
         <Badge size="mini" style={{ userSelect: "none" }}>
           {value}
         </Badge>
-        {iconByEmotion.get(emotion)({
+        {iconByEmotion.get(emotion)?.({
           color: iconColorByEmotion.get(emotion),
           size,
         })}

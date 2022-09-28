@@ -68,7 +68,7 @@ export default function CreateBoardPostModal({ onSuccessProp }: Props) {
         { author, contents, title, password },
         {
           onSuccess: async () => {
-            await onSuccessProp();
+            await onSuccessProp?.();
             setSubmitLoading(false);
             setVisible(false);
             setToast({
@@ -167,7 +167,3 @@ export default function CreateBoardPostModal({ onSuccessProp }: Props) {
     </>
   );
 }
-
-CreateBoardPostModal.defaultProps = {
-  onSuccessProp: () => {},
-};

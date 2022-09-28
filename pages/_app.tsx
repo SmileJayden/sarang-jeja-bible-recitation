@@ -1,3 +1,4 @@
+import type { AppProps } from "next/app";
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
@@ -14,7 +15,7 @@ import {
 } from "../constants/titles";
 import "../styles/globals.scss";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const path = router.pathname as LinkPath;
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, KeyboardEvent } from "react";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -24,10 +24,12 @@ enum QuizStatus {
   NOT_SUBMITTED = "not_submitted",
 }
 
+type Answer = { submissionAnswer: string };
+
 const QUIZ_SUBMIT_DURATION = 150;
 
 function QuizVerse({ book, chapter, verse, contents }: IVerse) {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm<Answer>();
 
   const [answer, setAnswer] = useState<string>("");
   const [answerOpened, setAnswerOpened] = useState<boolean>(false);
@@ -42,7 +44,7 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
     setQuizStatus(QuizStatus.NOT_SUBMITTED);
   }, [contents]);
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: Answer) => {
     setAnswer(data.submissionAnswer);
     setStatusHighlighted(true);
     setTimeout(() => {
@@ -111,9 +113,9 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
     );
   };
 
-  const checkKeyDown = (e) => {
-    const keyCode = e.keyCode ? e.keyCode : e.which;
-    if (keyCode === 13 && e.ctrlKey) {
+  const checkKeyDown = (e: KeyboardEvent<HTMLFormElement>) => {
+    const keyCode = e.key;
+    if (keyCode === "Enter" && e.ctrlKey) {
       handleSubmit(onSubmit)();
     }
   };

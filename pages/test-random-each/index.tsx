@@ -12,7 +12,6 @@ const NextPrevButtons = dynamic(
   }
 );
 import { getShuffledArray } from "../../utils";
-import { useMediaQuery } from "react-responsive";
 
 function TestRandom() {
   const [targetVerseIdx, setTargetVerseIdx] = useState(0);
@@ -35,6 +34,8 @@ function TestRandom() {
     setShuffleTrigger((prev) => !prev);
   };
 
+  const targetVerse = shuffledVerses[targetVerseIdx];
+
   return (
     <Page.Content className={"contents-main"}>
       {targetVerseIdx >= shuffledVerses.length ? (
@@ -51,7 +52,7 @@ function TestRandom() {
           >
             {targetVerseIdx + 1} 번째 말씀 / 총 {ALL_VERSES.length} 말씀
           </Text>
-          <QuizVerse {...shuffledVerses[targetVerseIdx]} />
+          {targetVerse != null ? <QuizVerse {...targetVerse} /> : null}
           <Spacer y={1.25} />
           <NextPrevButtons
             onPrevClick={handlePrevQuiz}

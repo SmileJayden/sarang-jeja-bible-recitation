@@ -13,7 +13,7 @@ import { useQuery } from "react-query";
 import CreateBoardPostModal from "../../components/create-board-post-modal";
 import BoardPostModal from "../../components/board-post-modal";
 import { PostResponse } from "../../types";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { formatUnixTimestampToString } from "../../utils";
 import { HttpMethod, QueryKeys } from "../../constants/http";
 import {
@@ -32,9 +32,11 @@ function GuestBoard() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [targetPostId, setTargetPostId] = useState<string | null>(null);
-  const targetPost = useMemo(() => {
-    return data?.posts?.find((p) => p.id === targetPostId) || null;
-  }, [data, targetPostId]);
+  const targetPost = data?.posts?.find((p) => p.id === targetPostId) || null;
+
+  if (data == null) {
+    return null;
+  }
 
   return (
     <Page.Content className={"contents-main"}>
@@ -53,14 +55,21 @@ function GuestBoard() {
       <Spacer y={1} />
       <Grid.Container gap={2}>
         {data.posts.map((post, i) => {
-          let maxEmotion = Object.values(Emotion)
-            .map((e) => ({
-              emotion: e,
-              count: post[e],
-            }))
-            .sort((x, y) => (x.count < y.count ? 1 : -1))[0];
-          if (maxEmotion.count === 0)
-            maxEmotion.emotion = Emotion.LOVE_AND_BLESSING;
+          const maxEmotion = Object.values<Emotion>(Emotion).reduce(
+            (prev, emotion) => {
+              if (prev.count < post[emotion]) {
+                return {
+                  emotion: emotion,
+                  count: post[emotion],
+                };
+              }
+              return prev;
+            },
+            {
+              emotion: Emotion.LOVE_AND_BLESSING,
+              count: 0,
+            } as { emotion: Emotion; count: number }
+          );
 
           return (
             <Grid key={`post-${i}-${post.id}`} lg={6} md={8} sm={12} xs={24}>
@@ -116,7 +125,7 @@ function GuestBoard() {
                         <Badge size="mini" style={{ userSelect: "none" }}>
                           {maxEmotion.count}
                         </Badge>
-                        {iconByEmotion.get(maxEmotion.emotion)({
+                        {iconByEmotion.get(maxEmotion.emotion)?.({
                           color: iconColorByEmotion.get(maxEmotion.emotion),
                           size: "1.4rem",
                         })}

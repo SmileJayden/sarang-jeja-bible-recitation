@@ -1,4 +1,4 @@
-import { useMemo, useState, Fragment } from "react";
+import { useState, Fragment } from "react";
 import dynamic from "next/dynamic";
 import { Page, Select, Spacer } from "@geist-ui/react";
 import Verse from "../../components/verse";
@@ -24,31 +24,42 @@ const weeksBySemester = new Map<typeof semesters[number], string[]>([
   ],
 ]);
 
+function isSemester(val: string): val is typeof semesters[number] {
+  return Boolean(semesters.find((lit) => val === lit));
+}
+
 export default function AllVerses() {
   const [semester, setSemester] =
-    useState<typeof semesters[number] | null>(null);
-  const [week, setWeek] = useState<string | null>(null);
+    useState<typeof semesters[number] | undefined>(undefined);
+  const [week, setWeek] = useState<string | undefined>(undefined);
 
-  const handleSemesterSelect = (selectedSemester) => {
-    if (selectedSemester !== semester) setWeek(null);
-    setSemester(selectedSemester);
+  const handleSemesterSelect = (val: string) => {
+    if (isSemester(val)) {
+      if (val !== semester) setWeek(undefined);
+      setSemester(val);
+    }
   };
-  const handleWeekSelect = (selectedWeek) => {
+  const handleWeekSelect = (selectedWeek: string) => {
     setWeek(selectedWeek);
   };
-  const filteredVerses = useMemo(() => {
+  const filteredVerses = (() => {
+    if (semester == null || week == null) {
+      return [];
+    }
     return ALL_VERSES.filter(
       (verse) =>
         verse.semester === parseInt(semester) && verse.week === parseInt(week)
     );
-  }, [week, semester]);
+  })();
 
   return (
     <Page.Content className={"contents-main"}>
       <Select
         width={"100%"}
         placeholder={"제자훈련 학기를 선택해주세요"}
-        onChange={handleSemesterSelect}
+        onChange={(v) => {
+          if (typeof v === "string") handleSemesterSelect(v);
+        }}
         value={semester}
         style={{ maxWidth: "unset" }}
       >
@@ -64,16 +75,20 @@ export default function AllVerses() {
         placeholder={`${
           semester ? `${semester}` : "해당 제자훈련 "
         }학기 중 몇번째 주 말씀인지 선택해 주세요 `}
-        onChange={handleWeekSelect}
+        onChange={(v) => {
+          if (typeof v === "string") handleWeekSelect(v);
+        }}
         disabled={!semester}
         value={week}
         style={{ maxWidth: "unset" }}
       >
-        {weeksBySemester.get(semester)?.map((w, i) => (
-          <Select.Option value={`${w}`} key={`${w}-${i}`}>
-            {w} 주차
-          </Select.Option>
-        ))}
+        {semester != null
+          ? weeksBySemester.get(semester)?.map((w, i) => (
+              <Select.Option value={`${w}`} key={`${w}-${i}`}>
+                {w} 주차
+              </Select.Option>
+            ))
+          : null}
       </Select>
       <Spacer y={0.75} />
       {filteredVerses.map((verse, i) => (

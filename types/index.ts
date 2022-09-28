@@ -14,9 +14,9 @@ export type PostDto = {
   contents: string;
   password: string;
   author: string;
-  createdDt: Date;
-  updatedDt: Date;
-  deletedDt: Date;
+  createdDt: { seconds: number; nanoseconds: number };
+  updatedDt: { seconds: number; nanoseconds: number };
+  deletedDt: { seconds: number; nanoseconds: number };
   [Emotion.LOVE_AND_BLESSING]: number;
   [Emotion.GOOD]: number;
   [Emotion.THUMBS_UP]: number;
@@ -27,7 +27,10 @@ export type PostDto = {
 
 export type PostResponse = PostDto & {
   id: string;
-  createdDt: { seconds: number; nanoseconds: number };
-  updatedDt: { seconds: number; nanoseconds: number };
-  deletedDt: { seconds: number; nanoseconds: number };
+};
+
+export type PostEmotionDto = {
+  postId: string;
+  emotion: Emotion;
+  incCount: number;
 };

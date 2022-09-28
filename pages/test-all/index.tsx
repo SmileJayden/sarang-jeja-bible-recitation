@@ -2,13 +2,13 @@ import { Fragment, useMemo } from "react";
 import { Page, Spacer, Text } from "@geist-ui/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { ALL_VERSES } from "../../constants/verses";
+import { getShuffledArray } from "../../utils";
 const QuizVerse = dynamic(() => import("../../components/quiz-verse"), {
   ssr: false,
 });
-import { ALL_VERSES } from "../../constants/verses";
-import { getShuffledArray } from "../../utils";
 
-function AllVerses() {
+export default function AllVerses() {
   const {
     query: { count },
   } = useRouter();
@@ -37,5 +37,3 @@ function AllVerses() {
     </Page.Content>
   );
 }
-
-export default AllVerses;
