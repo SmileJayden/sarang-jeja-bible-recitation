@@ -15,7 +15,7 @@ import BoardPostModal from "../../components/board-post-modal";
 import { PostResponse } from "../../types";
 import { useState } from "react";
 import { formatUnixTimestampToString } from "../../utils";
-import { HttpMethod, QueryKeys } from "../../constants/http";
+import { baseUrl, HttpMethod, QueryKeys } from "../../constants/http";
 import {
   Emotion,
   iconByEmotion,
@@ -26,7 +26,9 @@ function GuestBoard() {
   const { data, refetch } = useQuery<{
     posts: PostResponse[];
   }>(QueryKeys.POSTS, () =>
-    fetch("/api/post", { method: HttpMethod.GET }).then((res) => res.json())
+    fetch(`${baseUrl}/api/post`, { method: HttpMethod.GET }).then((res) =>
+      res.json()
+    )
   );
 
   const [modalVisible, setModalVisible] = useState(false);

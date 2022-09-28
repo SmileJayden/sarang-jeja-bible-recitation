@@ -10,12 +10,11 @@ import {
   Text,
   Textarea,
   Tooltip,
-  useModal,
   useToasts,
 } from "@geist-ui/react";
 import { Info } from "@geist-ui/react-icons";
 import { PageSubTitle } from "../../constants/titles";
-import { HttpMethod } from "../../constants/http";
+import { baseUrl, HttpMethod } from "../../constants/http";
 
 type BoardPostFormData = {
   title: string;
@@ -32,7 +31,7 @@ export default function CreateBoardPostModal({ onSuccessProp }: Props) {
   const { mutate } = useMutation(
     "createPost",
     ({ author, password, title, contents }: BoardPostFormData) =>
-      fetch("/api/post", {
+      fetch(`${baseUrl}/api/post`, {
         method: HttpMethod.POST,
         body: JSON.stringify({ author, password, title, contents }),
       }).then((res) => res.json())

@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from "react";
 import { Trash2 } from "@geist-ui/react-icons";
 import { useMediaQuery } from "react-responsive";
 import { useMutation } from "react-query";
-import { HttpMethod, MutationKeys } from "../../constants/http";
+import { baseUrl, HttpMethod, MutationKeys } from "../../constants/http";
 
 type DeletePostBody = {
   postId: string;
@@ -28,7 +28,7 @@ export default function PostDeleteButton({ postId, onSuccess }: Props) {
   } = useMutation<{}, {}, DeletePostBody>(
     MutationKeys.DELETE_POST,
     ({ postId, password }) =>
-      fetch("/api/post", {
+      fetch(`${baseUrl}/api/post`, {
         method: HttpMethod.DELETE,
         body: JSON.stringify({ postId, password }),
       }).then((res) => res.json())

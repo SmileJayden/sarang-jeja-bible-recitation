@@ -38,3 +38,5 @@ yarn-error.log*
 /public/sw.*
 /public/workbox-*
 /public/fallback-development.js
+
+.env

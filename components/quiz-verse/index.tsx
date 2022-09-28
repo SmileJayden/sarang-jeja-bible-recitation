@@ -1,5 +1,6 @@
 import { useEffect, useState, KeyboardEvent } from "react";
 import { useForm } from "react-hook-form";
+import { event } from "nextjs-google-analytics";
 import {
   Button,
   Card,
@@ -45,6 +46,10 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
   }, [contents]);
 
   const onSubmit = (data: Answer) => {
+    event("submit_answer", {
+      category: "Contact",
+      submissionAnswer: data.submissionAnswer,
+    });
     setAnswer(data.submissionAnswer);
     setStatusHighlighted(true);
     setTimeout(() => {

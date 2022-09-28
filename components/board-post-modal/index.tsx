@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useMutation } from "react-query";
 import { Divider, Grid, Modal, Row, Spacer, Text } from "@geist-ui/react";
-import { HttpMethod, MutationKeys } from "../../constants/http";
+import { baseUrl, HttpMethod, MutationKeys } from "../../constants/http";
 import { PostEmotionDto, PostResponse } from "../../types";
 import { formatUnixTimestampToString } from "../../utils";
 import { Emotion } from "../../constants/emotion";
@@ -19,14 +19,14 @@ export default function BoardPostModal({ post, visible, onClose }: Props) {
   const { mutate: emitEmotionMutation } = useMutation<{}, {}, PostEmotionDto>(
     MutationKeys.EDIT_EMOTION,
     ({ postId, emotion, incCount }) =>
-      fetch("/api/emotion", {
+      fetch(`${baseUrl}/api/emotion`, {
         method: HttpMethod.PUT,
         body: JSON.stringify({ postId, emotion, incCount }),
       }).then((res) => res.json())
   );
 
   const handleClickEmotionFactory = useCallback(
-    (postId, emotion) => {
+    (postId: string, emotion: Emotion) => {
       let incCount = 0;
       const postMutation = debounce(() => {
         emitEmotionMutation({ postId, emotion, incCount });
