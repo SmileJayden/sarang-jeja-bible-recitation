@@ -46,9 +46,9 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
   }, [contents]);
 
   const onSubmit = (data: Answer) => {
-    event("submit_answer", {
-      category: "Contact",
-      submissionAnswer: data.submissionAnswer,
+    event("submission_answer", {
+      category: "submissionAnswer",
+      label: data.submissionAnswer,
     });
     setAnswer(data.submissionAnswer);
     setStatusHighlighted(true);
