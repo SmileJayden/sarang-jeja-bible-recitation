@@ -10,7 +10,7 @@ import {
   Divider,
   Row,
 } from "@geist-ui/react";
-import { XSquare } from "@geist-ui/react-icons";
+import { XSquare, Delete } from "@geist-ui/react-icons";
 import { IVerse } from "../../types";
 import {
   checkIsAnswerCorrect,
@@ -30,7 +30,7 @@ type Answer = { submissionAnswer: string };
 const QUIZ_SUBMIT_DURATION = 150;
 
 function QuizVerse({ book, chapter, verse, contents }: IVerse) {
-  const { register, handleSubmit, reset } = useForm<Answer>();
+  const { register, handleSubmit, reset, resetField } = useForm<Answer>();
 
   const [answer, setAnswer] = useState<string>("");
   const [answerOpened, setAnswerOpened] = useState<boolean>(false);
@@ -72,6 +72,7 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
           style={{
             backgroundColor: statusHighlighted ? "#dce9fc" : "#ebf3ff",
             borderColor: "#b0c0ff",
+            paddingRight: "32px",
           }}
         >
           🙆‍♂️ 정답입니다! 😃 👍 👍 👍 👍 👍
@@ -83,6 +84,7 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
           style={{
             backgroundColor: statusHighlighted ? "#fff0ed" : "#fff8f7",
             borderColor: "#ffc2cf",
+            paddingRight: "32px",
           }}
         >
           <Text>🙅‍♀️ 오답입니다! 🥲</Text>
@@ -137,11 +139,32 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
       <Divider y={0} />
       <Card.Content>
         <form onSubmit={handleSubmit(onSubmit)} onKeyDown={checkKeyDown}>
-          <Textarea
-            {...register("submissionAnswer")}
-            width={"100%"}
-            minHeight={"200px"}
-          />
+          <div style={{ position: "relative" }}>
+            <button
+              style={{
+                position: "absolute",
+                right: "7px",
+                top: "7px",
+                cursor: "pointer",
+                padding: 0,
+                border: "none",
+                outline: "none",
+                font: "inherit",
+                color: "inherit",
+                background: "none",
+              }}
+              type="reset"
+              onClick={() => reset()}
+            >
+              <Delete />
+            </button>
+            <Textarea
+              {...register("submissionAnswer")}
+              width={"100%"}
+              minHeight={"200px"}
+              style={{ paddingRight: "32px" }}
+            />
+          </div>
           <Spacer y={1.25} />
           <Row justify={"end"}>
             <Button
@@ -180,7 +203,7 @@ function QuizVerse({ book, chapter, verse, contents }: IVerse) {
             <Text
               blockquote
               dangerouslySetInnerHTML={{ __html: contents }}
-              style={{ whiteSpace: "pre-wrap" }}
+              style={{ whiteSpace: "pre-wrap", paddingRight: "32px" }}
             />
           </div>
         )}
