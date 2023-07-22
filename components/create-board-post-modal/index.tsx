@@ -1,3 +1,4 @@
+import ky from "ky";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -31,10 +32,9 @@ export default function CreateBoardPostModal({ onSuccessProp }: Props) {
   const { mutate } = useMutation(
     "createPost",
     ({ author, password, title, contents }: BoardPostFormData) =>
-      fetch(`${baseUrl}/api/post`, {
-        method: HttpMethod.POST,
-        body: JSON.stringify({ author, password, title, contents }),
-      }).then((res) => res.json())
+      ky.post(`${baseUrl}/api/post`, {
+        json: { author, password, title, contents },
+      })
   );
 
   const [submitLoading, setSubmitLoading] = useState(false);

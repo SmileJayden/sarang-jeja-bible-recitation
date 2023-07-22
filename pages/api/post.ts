@@ -56,13 +56,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === HttpMethod.POST) {
-    const parsedReqBody = { ...JSON.parse(req.body) };
     await addDoc<PostDto>(postRef, {
-      ...parsedReqBody,
-      password: await bcrypt.hash(
-        parsedReqBody.password,
-        await bcrypt.genSalt(6)
-      ),
+      ...req.body,
+      password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(6)),
       createdDt: Timestamp.fromDate(new Date()),
       updatedDt: Timestamp.fromDate(new Date()),
       deletedDt: null,
@@ -78,35 +74,41 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === HttpMethod.DELETE) {
-    const parsedReqBody = { ...JSON.parse(req.body) };
-    const targetPostRef = doc(postRef, parsedReqBody.postId);
+    const targetPostRef = doc(postRef, req.body.postId);
 
-    try {
-      const transactionResult = await runTransaction(db, async (t) => {
-        const targetPostDoc = await t.get(targetPostRef);
-        if (!targetPostDoc.exists()) {
-          throw "Document does not exist!";
-        }
+    const transactionResult = await runTransaction(db, async (t) => {
+      const targetPostDoc = await t.get(targetPostRef);
+      if (!targetPostDoc.exists()) {
+        throw "Document does not exist!";
+      }
 
-        const match = await bcrypt.compare(
-          parsedReqBody.password,
-          targetPostDoc.data().password
-        );
-        if (!match) throw new Error("비밀번호가 맞지 않습니다");
+      const match = await bcrypt.compare(
+        req.body.password,
+        targetPostDoc.data().password
+      );
+      if (!match) {
+        return "fail";
+      }
 
-        await t.update(targetPostRef, {
-          deletedDt: Timestamp.fromDate(new Date()),
-        });
-        return `[DELETE]: Post ${parsedReqBody.postId} delete success`;
+      await t.update(targetPostRef, {
+        deletedDt: Timestamp.fromDate(new Date()),
       });
-      console.info(transactionResult);
-    } catch (e) {
-      console.error("Transaction failure:", e);
+      return "success";
+    });
+
+    if (transactionResult === "success") {
+      res.status(200).json({
+        message: `DELETE ${req.body.postId} post Success`,
+      });
+      res.end();
+      return;
     }
 
-    res.status(200).json({
-      message: `DELETE ${parsedReqBody.postId} post Success`,
+    res.status(400).json({
+      message: `DELETE ${req.body.postId} post Fail`,
     });
     res.end();
+
+    return;
   }
 };

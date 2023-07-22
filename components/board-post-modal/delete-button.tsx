@@ -1,3 +1,4 @@
+import ky from "ky";
 import { Button, Input, Modal, Spacer, useToasts } from "@geist-ui/react";
 import { ChangeEvent, useState } from "react";
 import { Trash2 } from "@geist-ui/react-icons";
@@ -25,13 +26,10 @@ export default function PostDeleteButton({ postId, onSuccess }: Props) {
     mutate: deletePostMutation,
     isError,
     isLoading,
-  } = useMutation<{}, {}, DeletePostBody>(
+  } = useMutation<unknown, unknown, DeletePostBody>(
     MutationKeys.DELETE_POST,
     ({ postId, password }) =>
-      fetch(`${baseUrl}/api/post`, {
-        method: HttpMethod.DELETE,
-        body: JSON.stringify({ postId, password }),
-      }).then((res) => res.json())
+      ky.delete(`${baseUrl}/api/post`, { json: { postId, password } })
   );
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,11 +53,11 @@ export default function PostDeleteButton({ postId, onSuccess }: Props) {
       { postId, password },
       {
         onSuccess: () => {
+          onSuccess?.();
           setToast({
             text: "게시글 삭제에 성공하였습니다",
             type: "success",
           });
-          onSuccess?.();
         },
         onError: () => {
           setToast({
