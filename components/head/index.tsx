@@ -1,7 +1,7 @@
 import Head from "next/head";
 
-const APP_NAME = "드리미 제자훈련";
-const APP_DESCRIPTION = "드리미 제자훈련 암송시험 말씀모음, 모의시험";
+const APP_NAME = "드림이 제자훈련";
+const APP_DESCRIPTION = "드림이 제자훈련 암송시험 말씀모음, 모의시험";
 
 function HeadComp() {
   return (

@@ -10,7 +10,7 @@ export enum PageTitle {
 }
 
 export enum PageSubTitle {
-  HOME = "대학 4부 제자훈련 암송시험 준비 홈페이지",
+  HOME = "대학 4부 드림이 제자훈련 암송시험 준비",
   ALL_VERSES = "전체 암송구절 보기",
   BY_WEEK = "주차별로 말씀 보기",
   TEST_RANDOM_EACH = "",

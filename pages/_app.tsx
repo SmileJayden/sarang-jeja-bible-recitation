@@ -7,18 +7,14 @@ import {
   DehydratedState,
 } from "react-query";
 import { useRouter } from "next/router";
-import NextLink from "next/link";
-import { CssBaseline, GeistProvider, Link, Page, Text } from "@geist-ui/react";
+import { CssBaseline, GeistProvider, Page, Text } from "@geist-ui/react";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { GoogleAnalytics, event } from "nextjs-google-analytics";
 import HeadComp from "../components/head";
 import { LinkPath } from "../constants/links";
-import {
-  PageTitle,
-  subTitleByLinkPath,
-  titleByLinkPath,
-} from "../constants/titles";
+import { subTitleByLinkPath, titleByLinkPath } from "../constants/titles";
 import "../styles/globals.scss";
+import Caption from "../components/caption";
 
 export function reportWebVitals({
   id,
@@ -56,14 +52,7 @@ export default function MyApp({
         <CssBaseline />
         <Page size={path === LinkPath.GUEST_BOARD ? "large" : "small"}>
           <Page.Header>
-            {path !== LinkPath.HOME && (
-              <NextLink href={"/"}>
-                {/*TODO: position' fixed*/}
-                <Link style={{ position: "absolute", top: 0 }}>
-                  <Text>{PageTitle.HOME}</Text>
-                </Link>
-              </NextLink>
-            )}
+            {path !== LinkPath.HOME && <Caption />}
             <Text h2 style={{ textAlign: "center" }}>
               {title}
             </Text>

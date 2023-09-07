@@ -300,18 +300,6 @@ export const PSALTER_119_103_105: IVerse = {
   week: 1,
 };
 
-export const DEUTERONOMY_6_6_7: IVerse = {
-  book: "신명기",
-  chapter: "6",
-  verse: "6-7",
-  contents:
-    "오늘 내가 네게 명하는 이 말씀을 너는 마음에 새기고" +
-    "\n\n" +
-    "네 자녀에게 부지런히 가르치며 집에 앉았을 때에든지 길을 갈 때에든지 누워 있을 때에든지 일어날 때에든지 이 말씀을 강론할 것이며",
-  semester: 2,
-  week: 6,
-};
-
 export const EPHESIANS_4_13_15: IVerse = {
   book: "에베소서",
   chapter: "4",
@@ -340,16 +328,16 @@ export const EPHESIANS_5_15_17: IVerse = {
   week: 9,
 };
 
-export const EPHESIANS_6_1_3: IVerse = {
+export const EPHESIANS_5_31_33: IVerse = {
   book: "에베소서",
-  chapter: "6",
-  verse: "1-3",
+  chapter: "5",
+  verse: "31-33",
   contents:
-    "자녀들아 주 안에서 너희 부모에게 순종하라 이것이 옳으니라" +
+    "그러므로 사람이 부모를 떠나 그의 아내와 합하여 그 둘이 한 육체가 될지니" +
     "\n\n" +
-    "네 아버지와 어머니를 공경하라 이것은 약속이 있는 첫 계명이니" +
+    "이 비밀이 크도나 나는 그리스도와 교회에 대하여 말하노라" +
     "\n\n" +
-    "이로써 네가 잘되고 땅에서 장수하리라",
+    "그러나 너희도 각각 자기의 아내 사랑하기를 자신 같이 하고 아내도 자기 남편을 존경하라",
   semester: 2,
   week: 6,
 };
@@ -471,6 +459,16 @@ export const PROVERBS_15_23: IVerse = {
   week: 4,
 };
 
+export const GENESIS_2_18: IVerse = {
+  book: "창세기",
+  chapter: "2",
+  verse: "18",
+  contents:
+    "여호와 하나님이 이르시되 사람이 혼자 사는 것이 좋지 아니하니 내가 그를 위하여 돕는 배필을 지으리라 하시니라",
+  semester: 2,
+  week: 6,
+};
+
 export const HEBREWS_4_15: IVerse = {
   book: "히브리서",
   chapter: "4",
@@ -532,10 +530,9 @@ export const ALL_VERSES = [
   ACTS_20_24,
   PSALTER_119_71,
   PSALTER_119_103_105,
-  DEUTERONOMY_6_6_7,
   EPHESIANS_4_13_15,
   EPHESIANS_5_15_17,
-  EPHESIANS_6_1_3,
+  EPHESIANS_5_31_33,
   EPHESIANS_6_10_11,
   JAMES_1_6_7,
   JOSHUA_1_8,
@@ -547,6 +544,7 @@ export const ALL_VERSES = [
   REVELATION_3_20,
   REVELATION_22_7,
   PROVERBS_15_23,
+  GENESIS_2_18,
   HEBREWS_4_15,
   HEBREWS_5_12_14,
   HEBREWS_9_27,
