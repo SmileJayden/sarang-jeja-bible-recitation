@@ -1,0 +1,37 @@
+name: Safe Backmerge(qa-safe -> main)
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - qa
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  safe-backmerge_to_main:
+    name: Safe Backmerge(qa-safe -> main)
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged = true
+    steps:
+      - name: qa-safe 브랜치 생성
+        id: set-qa-safe-branch
+        run: |
+          echo 'hello'
+          echo '${{ github.event.pull_request.baseRef.name }}'
+          echo 'nice to meet you'
+          
+          BRANCH_NAME=${{ github.event.pull_request.baseRef.name }}
+          
+          BRANCH=$(curl -L \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/SmileJayden/sarang-jeja-bible-recitation/branches/${BRANCH_NAME})
+          
+          echo $BRANCH
+        
+          
+          
+          
+
+
+
