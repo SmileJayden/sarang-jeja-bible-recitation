@@ -19,7 +19,7 @@ export default function AllVerses() {
       : ALL_VERSES;
 
   const caption = useMemo(() => {
-    if (count) return `무작위의 ${count}개 말씀 구절zz`;
+    if (count) return `무작위의 ${count}개 말씀 구절zzzz`;
     return "전체 암송 말씀 구절";
   }, [count]);
 
