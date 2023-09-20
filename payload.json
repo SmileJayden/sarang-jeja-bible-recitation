@@ -1,0 +1,11 @@
+{
+  "pull_request": {
+    "headRef": {
+      "name": "test"
+    },
+    "baseRef": {
+      "name": "qa"
+    },
+    "merged": true
+  }
+}

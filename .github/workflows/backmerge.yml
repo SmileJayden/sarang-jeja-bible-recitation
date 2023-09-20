@@ -1,0 +1,81 @@
+name: Safe back merge(qa-safe -> main)
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - qa
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  safe-backmerge_to_main:
+    name: Safe back merge(qa-safe -> main)
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: qa-safe 브랜치 제거
+        id: remove-qa-safe-branch
+        run: |
+          echo 'remove qa-safe branch'
+          
+          BRANCH_NAME=${{ github.event.pull_request.baseRef.name }}
+          
+          curl -L \
+            -X DELETE \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/SmileJayden/sarang-jeja-bible-recitation/git/refs/heads/${BRANCH_NAME}-safe
+
+      - name: qa-safe 브랜치 생성
+        id: set-qa-safe-branch
+        run: |
+          echo 'create new qa-safe branch'
+
+          BRANCH_NAME=${{ github.event.pull_request.baseRef.name }}
+
+          BASE_BRANCH_RESPONSE=$(curl -L \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/SmileJayden/sarang-jeja-bible-recitation/branches/${BRANCH_NAME})
+
+          HASH=$(echo $BASE_BRANCH_RESPONSE | jq -r '.commit.sha')
+
+          echo $HASH
+
+          DATA="{\"ref\": \"refs/heads/qa-safe\", \"sha\": \"${HASH}\"}"
+
+          echo $DATA
+
+          NEW_BRANCH_RESPONSE=$(curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/SmileJayden/sarang-jeja-bible-recitation/git/refs \
+            -d "${DATA}")
+
+          echo $NEW_BRANCH_RESPONSE
+
+      - name: create qa-safe -> main pull request
+        id: create-qa-safe-main-pull-request
+        env:
+          TITLE: "ci: [side-merge] hotfix → qa [${{ github.event.pull_request.title }}]"
+          BODY: "[hotfix/* → main으로 반영된 PR(#${{ github.event.pull_request.number }})](${{ github.event.pull_request.html_url }})을 QA에도 반영합니다."
+          HEAD: qa-safe
+          BASE: main
+        run: |
+          echo 'create pull request'
+          
+          DATA="{\"title\": \"${TITLE}\", \"body\": \"${BODY}\", \"head\": \"${HEAD}\", \"base\": \"${BASE}\"}"
+          
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/SmileJayden/sarang-jeja-bible-recitation/pulls \
+            -d "${DATA}"
+
+
+
