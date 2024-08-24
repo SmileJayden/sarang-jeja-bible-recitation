@@ -113,7 +113,7 @@ export const TIMOTHY2_3_16_17: IVerse = {
     "\n\n" +
     "이는 하나님의 사람으로 온전하게 하며 모든 선한 일을 행할 능력을 갖추게 하려 함이라",
   semester: 1,
-  week: 1,
+  week: 2,
 };
 
 export const ROMANS_3_21_22: IVerse = {
@@ -209,7 +209,7 @@ export const MATTEW_7_7_8: IVerse = {
     "\n\n" +
     "구하는 이마다 받을 것이요 찾는 이는 찾아낼 것이요 두드리는 이에게는 열릴 것이니라",
   semester: 1,
-  week: 2,
+  week: 1,
 };
 
 export const MATTEW_28_19_20: IVerse = {
@@ -297,7 +297,7 @@ export const PSALTER_119_103_105: IVerse = {
     "\n\n" +
     "주의 말씀은 내 발에 등이요 내 길에 빛이니이다",
   semester: 1,
-  week: 1,
+  week: 2,
 };
 
 export const EPHESIANS_4_13_15: IVerse = {
@@ -363,7 +363,7 @@ export const JAMES_1_6_7: IVerse = {
     "\n\n" +
     "이런 사람은 무엇이든지 주께 얻기를 생각하지 말라",
   semester: 1,
-  week: 2,
+  week: 1,
 };
 
 export const JOSHUA_1_8: IVerse = {
