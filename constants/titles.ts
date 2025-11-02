@@ -9,6 +9,12 @@ export enum PageTitle {
   GUEST_BOARD = "📜 방명록",
   XEE_VERSES = "✝️ XEE 말씀 구절",
   VERSES_72 = "📚 주제별 72구절",
+  VERSES_72_A = "A. 새로운 삶",
+  VERSES_72_B = "B. 그리스도를 전파함",
+  VERSES_72_C = "C. 하나님을 의뢰함",
+  VERSES_72_D = "D. 그리스도 제자의 자격",
+  VERSES_72_E = "E. 그리스도를 닮아감",
+  VERSES_72_F = "F. 온전한 인격",
 }
 
 export enum PageSubTitle {
@@ -31,6 +37,12 @@ export const titleByLinkPath = new Map<LinkPath, PageTitle>([
   [LinkPath.TEST_ALL, PageTitle.TEST_ALL],
   [LinkPath.XEE_VERSES, PageTitle.XEE_VERSES],
   [LinkPath.VERSES_72, PageTitle.VERSES_72],
+  [LinkPath.VERSES_72_A, PageTitle.VERSES_72_A],
+  [LinkPath.VERSES_72_B, PageTitle.VERSES_72_B],
+  [LinkPath.VERSES_72_C, PageTitle.VERSES_72_C],
+  [LinkPath.VERSES_72_D, PageTitle.VERSES_72_D],
+  [LinkPath.VERSES_72_E, PageTitle.VERSES_72_E],
+  [LinkPath.VERSES_72_F, PageTitle.VERSES_72_F],
 ]);
 
 export const subTitleByLinkPath = new Map<LinkPath, PageSubTitle>([

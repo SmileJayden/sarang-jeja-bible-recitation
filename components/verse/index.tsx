@@ -6,11 +6,25 @@ interface VerseProps extends IVerse {
   showGroup?: boolean;
 }
 
-function Verse({ book, chapter, verse, contents, group, showGroup = false }: VerseProps) {
+function Verse({
+  book,
+  chapter,
+  verse,
+  contents,
+  group,
+  showGroup = false,
+}: VerseProps) {
   return (
     <>
       {showGroup && group && (
-        <Text h4 style={{ marginBottom: "0.5rem", marginTop: "1.5rem", color: "#0070f3" }}>
+        <Text
+          h4
+          style={{
+            marginBottom: "0.5rem",
+            marginTop: "1.5rem",
+            color: "#0070f3",
+          }}
+        >
           {group}
         </Text>
       )}

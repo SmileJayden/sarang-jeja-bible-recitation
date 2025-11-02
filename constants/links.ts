@@ -7,4 +7,10 @@ export enum LinkPath {
   GUEST_BOARD = "/guest-board",
   XEE_VERSES = "/xee-verses",
   VERSES_72 = "/72-verses",
+  VERSES_72_A = "/72-verses/new-life",
+  VERSES_72_B = "/72-verses/proclaim-christ",
+  VERSES_72_C = "/72-verses/rely-on-god",
+  VERSES_72_D = "/72-verses/disciple-qualification",
+  VERSES_72_E = "/72-verses/be-like-christ",
+  VERSES_72_F = "/72-verses/complete-character",
 }

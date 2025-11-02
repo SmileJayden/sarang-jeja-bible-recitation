@@ -28,20 +28,6 @@ const linkCards: LinkCard[] = [
     },
   },
   {
-    label: "✝️ XEE 말씀 구절",
-    description: "XEE 말씀 구절 보기",
-    linkProps: {
-      href: { pathname: LinkPath.XEE_VERSES },
-    },
-  },
-  {
-    label: "📚 주제별 72구절",
-    description: "주제별 72구절 보기",
-    linkProps: {
-      href: { pathname: LinkPath.VERSES_72 },
-    },
-  },
-  {
     label: "🌈 주차별로 보기 ",
     description: "제자 훈련 주차별로 보기",
     linkProps: {
@@ -74,6 +60,20 @@ const linkCards: LinkCard[] = [
     description: <FirstPost />,
     linkProps: {
       href: { pathname: LinkPath.GUEST_BOARD },
+    },
+  },
+  {
+    label: "✝️ XEE 말씀 구절",
+    description: "XEE 말씀 구절 보기",
+    linkProps: {
+      href: { pathname: LinkPath.XEE_VERSES },
+    },
+  },
+  {
+    label: "📚 주제별 72구절",
+    description: "주제별 72구절 보기",
+    linkProps: {
+      href: { pathname: LinkPath.VERSES_72 },
     },
   },
 ];

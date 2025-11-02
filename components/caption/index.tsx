@@ -1,20 +1,16 @@
-import { useRouter } from "next/router";
+import NextLink from "next/link";
 import { Text } from "@geist-ui/react";
 import { PageTitle } from "../../constants/titles";
+import { LinkPath } from "../../constants/links";
 
 export default function Caption() {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.back();
-  };
-
   return (
-    <button
+    <div
       style={{ all: "unset", position: "absolute", top: 0, cursor: "pointer" }}
-      onClick={handleClick}
     >
-      <Text>{PageTitle.HOME}</Text>
-    </button>
+      <NextLink href={LinkPath.HOME}>
+        <Text>{PageTitle.HOME}</Text>
+      </NextLink>
+    </div>
   );
 }
