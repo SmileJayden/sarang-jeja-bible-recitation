@@ -28,6 +28,13 @@ const linkCards: LinkCard[] = [
     },
   },
   {
+    label: "✝️ XEE 말씀 구절",
+    description: "XEE 말씀 구절 보기",
+    linkProps: {
+      href: { pathname: LinkPath.XEE_VERSES },
+    },
+  },
+  {
     label: "🌈 주차별로 보기 ",
     description: "제자 훈련 주차별로 보기",
     linkProps: {
