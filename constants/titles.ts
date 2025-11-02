@@ -8,6 +8,7 @@ export enum PageTitle {
   TEST_ALL = "📝 전체 암송 시험",
   GUEST_BOARD = "📜 방명록",
   XEE_VERSES = "✝️ XEE 말씀 구절",
+  VERSES_72 = "📚 주제별 72구절",
 }
 
 export enum PageSubTitle {
@@ -18,6 +19,7 @@ export enum PageSubTitle {
   TEST_ALL = "",
   GUEST_BOARD = "❤️ 사랑을 담아 하고싶은 말을 적어보아요 ❤️",
   XEE_VERSES = "XEE 말씀 구절 보기",
+  VERSES_72 = "주제별 72구절 보기",
 }
 
 export const titleByLinkPath = new Map<LinkPath, PageTitle>([
@@ -28,6 +30,7 @@ export const titleByLinkPath = new Map<LinkPath, PageTitle>([
   [LinkPath.TEST_RANDOM_EACH, PageTitle.TEST_RANDOM_EACH],
   [LinkPath.TEST_ALL, PageTitle.TEST_ALL],
   [LinkPath.XEE_VERSES, PageTitle.XEE_VERSES],
+  [LinkPath.VERSES_72, PageTitle.VERSES_72],
 ]);
 
 export const subTitleByLinkPath = new Map<LinkPath, PageSubTitle>([
@@ -38,4 +41,5 @@ export const subTitleByLinkPath = new Map<LinkPath, PageSubTitle>([
   [LinkPath.TEST_RANDOM_EACH, PageSubTitle.TEST_RANDOM_EACH],
   [LinkPath.TEST_ALL, PageSubTitle.TEST_ALL],
   [LinkPath.XEE_VERSES, PageSubTitle.XEE_VERSES],
+  [LinkPath.VERSES_72, PageSubTitle.VERSES_72],
 ]);

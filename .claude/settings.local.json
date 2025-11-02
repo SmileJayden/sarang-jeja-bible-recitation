@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:m.sarang.org)",
+      "Bash(echo:*)",
+      "Bash(curl -s \"https://m.sarang.org/pub/recitation/amsong_view.asp?flag=A\")",
+      "Bash(curl -s \"https://m.sarang.org/pub/recitation/amsong_view.asp?flag=B\")",
+      "Bash(curl -s \"https://m.sarang.org/pub/recitation/amsong_view.asp?flag=C\")",
+      "Bash(curl -s \"https://m.sarang.org/pub/recitation/amsong_view.asp?flag=D\")",
+      "Bash(curl -s \"https://m.sarang.org/pub/recitation/amsong_view.asp?flag=E\")",
+      "Bash(curl -s \"https://m.sarang.org/pub/recitation/amsong_view.asp?flag=F\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

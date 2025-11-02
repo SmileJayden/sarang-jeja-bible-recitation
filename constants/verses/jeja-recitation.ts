@@ -1,6 +1,6 @@
-import { IVerse } from "../types";
+import { IVerse } from "../../types";
 
-export const GALATIANS_2_20: IVerse = {
+const GALATIANS_2_20: IVerse = {
   book: "갈라디아서",
   chapter: "2",
   verse: "20",
@@ -10,7 +10,7 @@ export const GALATIANS_2_20: IVerse = {
   week: 9,
 };
 
-export const CORINTHIANS1_6_19_20: IVerse = {
+const CORINTHIANS1_6_19_20: IVerse = {
   book: "고린도전서",
   chapter: "6",
   verse: "19-20",
@@ -22,7 +22,7 @@ export const CORINTHIANS1_6_19_20: IVerse = {
   week: 5,
 };
 
-export const CORINTHIANS1_12_13: IVerse = {
+const CORINTHIANS1_12_13: IVerse = {
   book: "고린도전서",
   chapter: "12",
   verse: "13",
@@ -32,7 +32,7 @@ export const CORINTHIANS1_12_13: IVerse = {
   week: 8,
 };
 
-export const CORINTHIANS2_7_1: IVerse = {
+const CORINTHIANS2_7_1: IVerse = {
   book: "고린도후서",
   chapter: "7",
   verse: "1",
@@ -42,7 +42,7 @@ export const CORINTHIANS2_7_1: IVerse = {
   week: 10,
 };
 
-export const CORINTHIANS2_13_13: IVerse = {
+const CORINTHIANS2_13_13: IVerse = {
   book: "고린도후서",
   chapter: "13",
   verse: "13",
@@ -52,7 +52,7 @@ export const CORINTHIANS2_13_13: IVerse = {
   week: 4,
 };
 
-export const LUKE_6_45: IVerse = {
+const LUKE_6_45: IVerse = {
   book: "누가복음",
   chapter: "6",
   verse: "45",
@@ -62,7 +62,7 @@ export const LUKE_6_45: IVerse = {
   week: 4,
 };
 
-export const LUKE_16_10: IVerse = {
+const LUKE_16_10: IVerse = {
   book: "누가복음",
   chapter: "16",
   verse: "10",
@@ -72,7 +72,7 @@ export const LUKE_16_10: IVerse = {
   week: 9,
 };
 
-export const THESSALONICA1_4_16_17: IVerse = {
+const THESSALONICA1_4_16_17: IVerse = {
   book: "데살로니가전서",
   chapter: "4",
   verse: "16-17",
@@ -84,7 +84,7 @@ export const THESSALONICA1_4_16_17: IVerse = {
   week: 11,
 };
 
-export const TITUS_3_5: IVerse = {
+const TITUS_3_5: IVerse = {
   book: "디도서",
   chapter: "3",
   verse: "5",
@@ -94,7 +94,7 @@ export const TITUS_3_5: IVerse = {
   week: 9,
 };
 
-export const TIMOTHY2_2_22: IVerse = {
+const TIMOTHY2_2_22: IVerse = {
   book: "디모데후서",
   chapter: "2",
   verse: "22",
@@ -104,7 +104,7 @@ export const TIMOTHY2_2_22: IVerse = {
   week: 5,
 };
 
-export const TIMOTHY2_3_16_17: IVerse = {
+const TIMOTHY2_3_16_17: IVerse = {
   book: "디모데후서",
   chapter: "3",
   verse: "16-17",
@@ -116,7 +116,7 @@ export const TIMOTHY2_3_16_17: IVerse = {
   week: 2,
 };
 
-export const ROMANS_3_21_22: IVerse = {
+const ROMANS_3_21_22: IVerse = {
   book: "로마서",
   chapter: "3",
   verse: "21-22",
@@ -128,7 +128,7 @@ export const ROMANS_3_21_22: IVerse = {
   week: 10,
 };
 
-export const ROMANS_4_25: IVerse = {
+const ROMANS_4_25: IVerse = {
   book: "로마서",
   chapter: "4",
   verse: "25",
@@ -138,7 +138,7 @@ export const ROMANS_4_25: IVerse = {
   week: 7,
 };
 
-export const ROMANS_5_8: IVerse = {
+const ROMANS_5_8: IVerse = {
   book: "로마서",
   chapter: "5",
   verse: "8",
@@ -148,7 +148,7 @@ export const ROMANS_5_8: IVerse = {
   week: 7,
 };
 
-export const ROMANS_5_12: IVerse = {
+const ROMANS_5_12: IVerse = {
   book: "로마서",
   chapter: "5",
   verse: "12",
@@ -158,7 +158,7 @@ export const ROMANS_5_12: IVerse = {
   week: 6,
 };
 
-export const ROMANS_8_28: IVerse = {
+const ROMANS_8_28: IVerse = {
   book: "로마서",
   chapter: "8",
   verse: "28",
@@ -168,7 +168,7 @@ export const ROMANS_8_28: IVerse = {
   week: 7,
 };
 
-export const ROMANS_11_36: IVerse = {
+const ROMANS_11_36: IVerse = {
   book: "로마서",
   chapter: "11",
   verse: "36",
@@ -178,7 +178,7 @@ export const ROMANS_11_36: IVerse = {
   week: 4,
 };
 
-export const ROMANS_14_7_8: IVerse = {
+const ROMANS_14_7_8: IVerse = {
   book: "로마서",
   chapter: "14",
   verse: "7-8",
@@ -190,7 +190,7 @@ export const ROMANS_14_7_8: IVerse = {
   week: 8,
 };
 
-export const MATTEW_5_16: IVerse = {
+const MATTEW_5_16: IVerse = {
   book: "마태복음",
   chapter: "5",
   verse: "16",
@@ -200,7 +200,7 @@ export const MATTEW_5_16: IVerse = {
   week: 3,
 };
 
-export const MATTEW_7_7_8: IVerse = {
+const MATTEW_7_7_8: IVerse = {
   book: "마태복음",
   chapter: "7",
   verse: "7-8",
@@ -212,7 +212,7 @@ export const MATTEW_7_7_8: IVerse = {
   week: 1,
 };
 
-export const MATTEW_28_19_20: IVerse = {
+const MATTEW_28_19_20: IVerse = {
   book: "마태복음",
   chapter: "28",
   verse: "19-20",
@@ -224,7 +224,7 @@ export const MATTEW_28_19_20: IVerse = {
   week: 3,
 };
 
-export const PETER1_5_8: IVerse = {
+const PETER1_5_8: IVerse = {
   book: "베드로전서",
   chapter: "5",
   verse: "8",
@@ -234,7 +234,7 @@ export const PETER1_5_8: IVerse = {
   week: 11,
 };
 
-export const PETER2_1_21: IVerse = {
+const PETER2_1_21: IVerse = {
   book: "베드로후서",
   chapter: "1",
   verse: "21",
@@ -244,7 +244,7 @@ export const PETER2_1_21: IVerse = {
   week: 3,
 };
 
-export const PHILIPPIANS_1_21: IVerse = {
+const PHILIPPIANS_1_21: IVerse = {
   book: "빌립보서",
   chapter: "2",
   verse: "3-4",
@@ -256,7 +256,7 @@ export const PHILIPPIANS_1_21: IVerse = {
   week: 1,
 };
 
-export const ACTS_2_38: IVerse = {
+const ACTS_2_38: IVerse = {
   book: "사도행전",
   chapter: "2",
   verse: "38",
@@ -266,7 +266,7 @@ export const ACTS_2_38: IVerse = {
   week: 8,
 };
 
-export const ACTS_20_24: IVerse = {
+const ACTS_20_24: IVerse = {
   book: "사도행전",
   chapter: "20",
   verse: "24",
@@ -276,7 +276,7 @@ export const ACTS_20_24: IVerse = {
   week: 10,
 };
 
-export const PSALTER_119_71: IVerse = {
+const PSALTER_119_71: IVerse = {
   book: "시편",
   chapter: "119",
   verse: "71",
@@ -286,7 +286,7 @@ export const PSALTER_119_71: IVerse = {
   week: 7,
 };
 
-export const PSALTER_119_103_105: IVerse = {
+const PSALTER_119_103_105: IVerse = {
   book: "시편",
   chapter: "119",
   verse: "103-105",
@@ -300,7 +300,7 @@ export const PSALTER_119_103_105: IVerse = {
   week: 2,
 };
 
-export const EPHESIANS_4_13_15: IVerse = {
+const EPHESIANS_4_13_15: IVerse = {
   book: "에베소서",
   chapter: "4",
   verse: "13-15",
@@ -314,7 +314,7 @@ export const EPHESIANS_4_13_15: IVerse = {
   week: 2,
 };
 
-export const EPHESIANS_5_15_17: IVerse = {
+const EPHESIANS_5_15_17: IVerse = {
   book: "에베소서",
   chapter: "5",
   verse: "15-17",
@@ -328,7 +328,7 @@ export const EPHESIANS_5_15_17: IVerse = {
   week: 9,
 };
 
-export const EPHESIANS_5_31_33: IVerse = {
+const EPHESIANS_5_31_33: IVerse = {
   book: "에베소서",
   chapter: "5",
   verse: "31-33",
@@ -342,7 +342,7 @@ export const EPHESIANS_5_31_33: IVerse = {
   week: 6,
 };
 
-export const EPHESIANS_6_10_11: IVerse = {
+const EPHESIANS_6_10_11: IVerse = {
   book: "에베소서",
   chapter: "6",
   verse: "10-11",
@@ -354,7 +354,7 @@ export const EPHESIANS_6_10_11: IVerse = {
   week: 11,
 };
 
-export const JAMES_1_6_7: IVerse = {
+const JAMES_1_6_7: IVerse = {
   book: "야고보서",
   chapter: "1",
   verse: "6-7",
@@ -366,7 +366,7 @@ export const JAMES_1_6_7: IVerse = {
   week: 1,
 };
 
-export const JOSHUA_1_8: IVerse = {
+const JOSHUA_1_8: IVerse = {
   book: "여호수아",
   chapter: "1",
   verse: "8",
@@ -376,7 +376,7 @@ export const JOSHUA_1_8: IVerse = {
   week: 3,
 };
 
-export const JOHN_13_34_35: IVerse = {
+const JOHN_13_34_35: IVerse = {
   book: "요한복음",
   chapter: "13",
   verse: "34-35",
@@ -388,7 +388,7 @@ export const JOHN_13_34_35: IVerse = {
   week: 12,
 };
 
-export const JOHN_14_6: IVerse = {
+const JOHN_14_6: IVerse = {
   book: "요한복음",
   chapter: "14",
   verse: "6",
@@ -398,7 +398,7 @@ export const JOHN_14_6: IVerse = {
   week: 5,
 };
 
-export const JOHN_14_21: IVerse = {
+const JOHN_14_21: IVerse = {
   book: "요한복음",
   chapter: "14",
   verse: "21",
@@ -408,7 +408,7 @@ export const JOHN_14_21: IVerse = {
   week: 1,
 };
 
-export const JOHN1_2_16_17: IVerse = {
+const JOHN1_2_16_17: IVerse = {
   book: "요한일서",
   chapter: "2",
   verse: "16-17",
@@ -420,7 +420,7 @@ export const JOHN1_2_16_17: IVerse = {
   week: 10,
 };
 
-export const JOHN1_3_18: IVerse = {
+const JOHN1_3_18: IVerse = {
   book: "요한일서",
   chapter: "3",
   verse: "18",
@@ -429,7 +429,7 @@ export const JOHN1_3_18: IVerse = {
   week: 12,
 };
 
-export const REVELATION_3_20: IVerse = {
+const REVELATION_3_20: IVerse = {
   book: "요한계시록",
   chapter: "3",
   verse: "20",
@@ -439,7 +439,7 @@ export const REVELATION_3_20: IVerse = {
   week: 8,
 };
 
-export const REVELATION_22_7: IVerse = {
+const REVELATION_22_7: IVerse = {
   book: "요한계시록",
   chapter: "22",
   verse: "7",
@@ -449,7 +449,7 @@ export const REVELATION_22_7: IVerse = {
   week: 11,
 };
 
-export const PROVERBS_15_23: IVerse = {
+const PROVERBS_15_23: IVerse = {
   book: "잠언",
   chapter: "15",
   verse: "23",
@@ -459,7 +459,7 @@ export const PROVERBS_15_23: IVerse = {
   week: 4,
 };
 
-export const GENESIS_2_18: IVerse = {
+const GENESIS_2_18: IVerse = {
   book: "창세기",
   chapter: "2",
   verse: "18",
@@ -469,7 +469,7 @@ export const GENESIS_2_18: IVerse = {
   week: 6,
 };
 
-export const HEBREWS_4_15: IVerse = {
+const HEBREWS_4_15: IVerse = {
   book: "히브리서",
   chapter: "4",
   verse: "15",
@@ -479,7 +479,7 @@ export const HEBREWS_4_15: IVerse = {
   week: 5,
 };
 
-export const HEBREWS_5_12_14: IVerse = {
+const HEBREWS_5_12_14: IVerse = {
   book: "히브리서",
   chapter: "5",
   verse: "12-14",
@@ -493,72 +493,15 @@ export const HEBREWS_5_12_14: IVerse = {
   week: 2,
 };
 
-export const HEBREWS_9_27: IVerse = {
+const HEBREWS_9_27: IVerse = {
   book: "히브리서",
   chapter: "9",
   verse: "27",
   contents: "한 번 죽는 것은 사람에게 정해진 것이요 그 후에는 심판이 있으리니",
   semester: 1,
   week: 6,
+  group: "죄의 형벌",
 };
-
-// XEE 말씀 구절
-export const JOHN_10_10: IVerse = {
-  book: "요한복음",
-  chapter: "10",
-  verse: "10",
-  contents:
-    "도둑이 오는 것은 도둑질하고 죽이고 멸망 시키려는 것 뿐이요, 내가 온 것은 양으로 생명을 얻게 하고 더 풍성히 얻게 하려는 것이라",
-  semester: 0,
-  week: 0,
-};
-
-export const ROMANS_3_23: IVerse = {
-  book: "로마서",
-  chapter: "3",
-  verse: "23",
-  contents: "모든 사람이 죄를 범하였으매 하나님의 영광에 이르지 못하더니",
-  semester: 0,
-  week: 0,
-};
-
-export const ROMANS_6_23: IVerse = {
-  book: "로마서",
-  chapter: "6",
-  verse: "23",
-  contents:
-    "죄의 삯은 사망이요 하나님의 은사(선물)은 그리스도 예수 우리 주 안에 있는 영생이니라",
-  semester: 0,
-  week: 0,
-};
-
-export const JOHN_3_16: IVerse = {
-  book: "요한복음",
-  chapter: "3",
-  verse: "16",
-  contents:
-    "하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 그를 믿는 자마다 멸망하지 않고 영생을 얻게 하려하심이라",
-  semester: 0,
-  week: 0,
-};
-
-export const JOHN_6_47: IVerse = {
-  book: "요한복음",
-  chapter: "6",
-  verse: "47",
-  contents: "진실로 진실로 너희에게 이르노니 믿는 자는 영생을 가졌나니",
-  semester: 0,
-  week: 0,
-};
-
-export const XEE_VERSES = [
-  JOHN_10_10,
-  ROMANS_3_23,
-  ROMANS_6_23,
-  JOHN_3_16,
-  JOHN_14_6,
-  JOHN_6_47,
-];
 
 export const ALL_VERSES = [
   GALATIANS_2_20,

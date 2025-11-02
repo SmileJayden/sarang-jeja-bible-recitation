@@ -7,6 +7,7 @@ export interface IVerse {
   contents: string;
   semester: number;
   week: number;
+  group?: string;
 }
 
 export type PostDto = {

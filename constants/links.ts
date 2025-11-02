@@ -6,4 +6,5 @@ export enum LinkPath {
   TEST_ALL = "/test-all",
   GUEST_BOARD = "/guest-board",
   XEE_VERSES = "/xee-verses",
+  VERSES_72 = "/72-verses",
 }

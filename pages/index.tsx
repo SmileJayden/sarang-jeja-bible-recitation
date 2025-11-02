@@ -35,6 +35,13 @@ const linkCards: LinkCard[] = [
     },
   },
   {
+    label: "📚 주제별 72구절",
+    description: "주제별 72구절 보기",
+    linkProps: {
+      href: { pathname: LinkPath.VERSES_72 },
+    },
+  },
+  {
     label: "🌈 주차별로 보기 ",
     description: "제자 훈련 주차별로 보기",
     linkProps: {
